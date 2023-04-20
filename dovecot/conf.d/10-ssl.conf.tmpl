@@ -1,0 +1,37 @@
+##
+## SSL settings
+##
+
+ssl = required
+
+ssl_cert = </etc/letsencrypt/live/${HOSTNAME}/fullchain.pem
+ssl_key = </etc/letsencrypt/live/${HOSTNAME}/privkey.pem
+
+#ssl_key_password =
+#ssl_ca = 
+#ssl_require_crl = yes
+
+#ssl_client_ca_dir =
+#ssl_client_ca_file =
+#ssl_client_require_valid_cert = yes
+#ssl_verify_client_cert = no
+
+#ssl_cert_username_field = commonName
+
+#ssl_dh = </etc/dovecot/dh.pem
+
+#ssl_min_protocol = TLSv1.2
+
+#ssl_cipher_list = ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH
+# To disable non-EC DH, use:
+#ssl_cipher_list = ALL:!DH:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH
+
+#ssl_curve_list =
+
+ssl_prefer_server_ciphers = yes
+
+#ssl_crypto_device =
+
+#   compression - Enable compression.
+#   no_ticket - Disable SSL session tickets.
+#ssl_options =

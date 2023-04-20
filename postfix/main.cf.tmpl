@@ -1,0 +1,96 @@
+# General settings
+
+mydomain = ${DOMAIN}
+myhostname = ${HOSTNAME}
+
+myorigin = $mydomain
+
+inet_interfaces = all
+inet_protocols = ipv4
+
+
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+append_dot_mydomain = no
+biff = no
+
+# support gmail-like user name suffixes, e.g. "kenny+spam@mydomain.net" maps to kenny@mydomain.net
+recipient_delimiter = +
+
+# Virtual domains and stuff
+virtual_mailbox_base = /host/mail/inboxes
+virtual_mailbox_maps = lmdb:/etc/postfix/vuser
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+# gid/uid 2001 is "mailuser" created in Dockerfile
+virtual_uid_maps = static:2001
+virtual_gid_maps = static:2001
+virtual_alias_maps = lmdb:/etc/postfix/valias
+virtual_mailbox_domains = ${ADDITIONAL_DOMAINS}
+
+# Wire up dovecot, opendkim, opendmarc
+mailbox_transport = lmtp:unix:private/dovecot-lmtp
+smtputf8_enable = no
+
+milter_default_action = accept
+milter_protocol = 6
+
+smtpd_milters = inet:127.0.0.1:8891,inet:127.0.0.1:8893
+non_smtpd_milters = $smtpd_milters
+
+mailbox_size_limit = 0
+message_size_limit = 52428800
+
+maillog_file_prefixes = /host/var/log/
+maillog_file = /host/var/log/postfix.log
+
+# Authentication
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_local_domain = $mydomain
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_tls_security_options = noanonymous
+broken_sasl_auth_clients = yes
+smtpd_sasl_auth_enable = yes
+
+# Certificates, Transport Security, and connection sanity
+
+# root ca certs bundle
+smtp_tls_CApath = /etc/ssl
+smtp_tls_CAfile = /etc/ssl/cert.pem
+
+# SSL/TLS
+smtpd_use_tls = yes
+
+smtpd_tls_cert_file = /etc/letsencrypt/live/$myhostname/fullchain.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/$myhostname/privkey.pem
+
+smtp_tls_security_level = may
+smtpd_tls_loglevel = 1
+smtp_tls_loglevel = 1
+
+# Force TLSv1.3 or TLSv1.2
+smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+smtpd_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+smtp_tls_mandatory_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+smtp_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+
+# Keep connections clean
+smtpd_client_restrictions =
+        permit_mynetworks,
+        permit_sasl_authenticated,
+        reject_unauth_pipelining,
+        reject_unknown_client_hostname,
+        permit
+
+smtpd_recipient_restrictions=
+        permit_mynetworks,
+        reject_unauth_pipelining,
+        reject_invalid_hostname,
+        reject_unknown_recipient_domain,
+        reject_non_fqdn_recipient,
+        permit_sasl_authenticated,
+        reject_unknown_client_hostname,
+        reject_unauth_destination,
+        check_sender_access pcre:/etc/postfix/sender_access,
+        reject_rbl_client zen.spamhaus.org,
+        reject_rhsbl_client dbl.spamhaus.org,
+        permit

@@ -1,0 +1,11 @@
+#
+# Temporary HTTP server used for bootstrapping letsencrypt
+#
+
+:80 {
+	root * /host/srv/www/html
+	file_server
+	log {
+		output file /host/var/log/caddy.log
+	}
+}
