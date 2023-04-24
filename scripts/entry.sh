@@ -52,8 +52,13 @@ echo "##### ENTRY: Rendering configs"
 envsubst '$DOMAIN $HOSTNAME $ADDITIONAL_DOMAINS' < /etc/postfix/main.cf.tmpl > /etc/postfix/main.cf
 envsubst '$HOSTNAME' < /etc/dovecot/conf.d/10-ssl.conf.tmpl > /etc/dovecot/conf.d/10-ssl.conf
 
+echo "##### ENTRY: Starting services"
 postfix start
 dovecot
+
+if test "${METRICS:-}" = "true" ; then
+    /postfix_exporter --postfix.logfile_path /host/var/log/postfix.log 1>/host/var/log/postfix_exporter.log 2>&1 &
+fi
 
 echo
 echo "##### Mail server system up and running on ${HOSTNAME}."

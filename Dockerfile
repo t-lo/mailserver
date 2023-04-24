@@ -1,12 +1,25 @@
+# First, build the metrics exporter.
+# We ship it even if the monitoring back-end is not being used.
+FROM alpine AS builder
+ARG version=0.3.0
+
+RUN apk update \
+    && apk add go
+
+RUN echo "Downloading '$version'" \
+    && wget https://github.com/kumina/postfix_exporter/archive/refs/tags/$version.tar.gz \
+    && tar -xzvf $version.tar.gz
+
+RUN cd /postfix_exporter-$version \
+    && go get -d ./... \
+    && go build -a -tags nosystemd \
+    && strip postfix_exporter \
+    && mv postfix_exporter /
+
+
 FROM alpine
 
-# Config env:
-# ${DOMAIN}
-# ${HOSTNAME} (w/o domain)
-# ${ADMIN_EMAIL} (ideally NOT on this server)
-
-# TODO: script for automating postfix vuser, valias, dovecot passwd
-
+COPY --from=builder /postfix_exporter /
 RUN apk update \
     && apk upgrade \
     && apk add postfix certbot opendkim opendmarc caddy \
