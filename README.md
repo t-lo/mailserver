@@ -9,7 +9,7 @@ DNS is a requirement for getting letsencrypt certificates.
 
 ## TL;DR
 
-**Set up & start server**
+**Set up server**
 
 1. Create `settings.env` and set
    ```
@@ -19,7 +19,22 @@ DNS is a requirement for getting letsencrypt certificates.
    ADDITIONAL_DOMAINS=
    ```
 2. `mkdir _server_workspace_`
-3. `docker run --rm -ti -p 80:80 -p 25:25 -p 465:465 -p 143:143 -p 993:993 -v $(pwd)/_server_workspace_:/host --env-file settings.env --name my-mailserver ghcr.io/t-lo/mailserver`
+
+
+**Create DNS entries for your mail server**
+
+1. Create an A record for `HOSTNAME` pointing to your server's public IP, and a (reverse-DNS) PTR record for your server's public IP to resolve to `HOSTNAME`.
+2. Add an MX record to `DOMAIN` and (if applicable) `ADDITIONAL_DOMAINS` and point it to `HOSTNAME`.
+3. Validate DNS settings:
+   ```shell
+   docker run --rm -ti --entrypoint /dns_sanity.sh --env-file settings.env --name mailserver-sanitycheck ghcr.io/t-lo/mailserver
+   ```
+
+
+**Start server**
+
+1. `docker run --rm -ti -p 80:80 -p 25:25 -p 465:465 -p 143:143 -p 993:993 -v $(pwd)/_server_workspace_:/host --env-file settings.env --name my-mailserver ghcr.io/t-lo/mailserver`
+
 
 **Manage users and aliases**
 
@@ -28,6 +43,7 @@ DNS is a requirement for getting letsencrypt certificates.
 3. `./user.sh list` list users
 4. `./user.sh del jens@wombathub.de` del user `jens@wombathub.de`. Use `.. --purge-inbox ..` to also delete all emails.
 5. Edit `_server_workspace_/etc/postfix/valias` (`<alias email>  <domain user>` key value, separated by space), then run `./user.sh update-aliases`.
+
 
 **Client set-up for mail server users**
 
@@ -42,7 +58,7 @@ Create a file `settings.env` (e.g. from the skeleton `settings.env.empty` provid
 It is recommended to pick a unique DNS name for your mailserver - like `mail.mydomain.tld` - to avoid a number of edge cases and pitfalls.
 Note that your mail server `HOSTNAME` does not necessarily need to be a member of `DOMAIN` - `mail.t-lo.net` can happily serve mails for users of domain `wombathub.de`.
 ```shell
-# Name of your email domain. Likely the domain part of your hostname.
+# Name of your main email domain. Likely (but not necessarily) the domain part of your hostname.
 DOMAIN=
 
 # Hostname of the mail server. A valid DNS name entry must exist and point to this server's IP address.
@@ -67,6 +83,35 @@ Stateful data like mailboxes, user accounts, generated mail server configuration
 $ mkdir _server_workspace_
 ```
 
+## Set up DNS for your mailserver
+
+A correct and complete DNS setup is important not only for your mailserver to be found but also for other mailservers to trust your server.
+
+**A record and reverse-DNS PTR**
+
+First, make you're you have an A record (a generic server entry) for your server's `HOSTNAME` pointing to your server's public IP address.
+This is commonly i(generalised) referred to as "DNS entry".
+If you run a `ping -n $HOSTNAME` your mail server's IP should be pinged.
+
+**NOTE** The A record should be created before the mail server is started for the first time.
+Letsencrypt requires a correct A record to be set in order to grant certificates.
+
+Complementarily, create a PTR for your server's public IP address to `HOSTNAME`.
+When sending email, other mail servers will look up your server's A record, reverse-DNS resolve the IP address via the PTR record, and compare the results.
+
+**MX records for all domains served by the mailserver**
+
+Also, every domain served by the mailserver (both the main `DOMAIN` as well as additional domains listed in `ADDITIONAL_DOMAINS`) 
+
+If A and PTR do not match it is more likey that mails sent from your server will end up in SPAM - or outright rejected.
+
+**Test your DNS set-up**
+
+The repository supplies a script to check most basic DNS settings. More complex checks are available via e.g. https://mxtoolbox.com/dnscheck.aspx
+```shell
+docker run --rm -ti --entrypoint /dns_sanity.sh --env-file settings.env --name mailserver-sanitycheck ghcr.io/t-lo/mailserver
+```
+
 ## Start the mail server container
 
 Start the server:
@@ -81,7 +126,7 @@ In the above command we allow the following TCP ports for the mail server contai
 
 Furthermore, we bind the local `_server_workspace_` directory into the container for all stateful data, and we pass our environment file with the server settings.
 
-Initial start-up can take a few minutes since it calculates DH parameters for postfix' outgoing TLS connections.
+Initial start-up can take a few minutes since it calculates DH parameters for postfix' TLS connections to other SMTP servers.
 Subsequent start-ups will be much faster.
 On start-up, the server will request letsencrypt certificates for the mail service and store these in `_server_workspace_/etc/letsencrypt`.
 

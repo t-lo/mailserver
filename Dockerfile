@@ -11,7 +11,7 @@ RUN apk update \
     && apk upgrade \
     && apk add postfix certbot opendkim opendmarc caddy \
                ca-certificates-bundle dovecot dovecot-pigeonhole-plugin \
-               dovecot-lmtpd gettext openssl fail2ban pwgen
+               dovecot-lmtpd gettext openssl fail2ban pwgen bind-tools curl
 
 COPY caddy/Caddyfile.http /etc/caddy/
 COPY dovecot/dovecot.conf /etc/dovecot/
@@ -24,7 +24,6 @@ RUN touch /etc/postfix/vuser /etc/postfix/valias
 RUN addgroup -g 2001 mailuser \
     && adduser -G mailuser -u 2001 -D -H mailuser
 
-COPY --chmod=755 scripts/entry.sh scripts/add_user.sh \
-		 scripts/del_user.sh scripts/update_aliases.sh /
+COPY --chmod=755 scripts/* /
 
 entrypoint /entry.sh
