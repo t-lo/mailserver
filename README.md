@@ -23,9 +23,11 @@ DNS is a requirement for getting letsencrypt certificates.
 
 **Manage users and aliases**
 
-1. `./add_user.sh meier@entropiesenke.de 12345` or `./add_user.sh meier@entropiesenke.de` (to auto-generate a password).
-2. `./del_user.sh jens@wombathub.de` or `./del_user.sh --purge-inbox jens@wombathub.de` to also delete all emails.
-3. Edit `_server_workspace_/etc/postfix/valias` (`<alias email>  <domain user>` key value, separated by space), then run `./update_aliases.sh`.
+1. `./user.sh add meier@entropiesenke.de 12345` add user w/ password `12345`
+2. `./user.sh add jens@wombathub.de` add user and auto-generate (and print) password
+3. `./user.sh list` list users
+4. `./user.sh del jens@wombathub.de` del user `jens@wombathub.de`. Use `.. --purge-inbox ..` to also delete all emails.
+5. Edit `_server_workspace_/etc/postfix/valias` (`<alias email>  <domain user>` key value, separated by space), then run `./user.sh update-aliases`.
 
 ## Set up your mail server
 
@@ -85,7 +87,7 @@ The counterparts inside the container reside in th repo's `scripts/` directory a
 ### Add a new user
 
 ```shell
-$ ./add_user.sh jens@wombathub.de
+$ ./user.sh add jens@wombathub.de
 Created user 'jens@wombathub.de', generated password is:'0sw;eZxqh(M6mmjlnqu;'.
 ```
 **NOTE** Password is *within* the single quotes (`'`). The single quotes are *not* part of the password.
@@ -96,14 +98,22 @@ In the latter case the password is printed after the user has been generated.
 
 To add user "meier" with password "12345" to domain "entropiesenke.de", run
 ```shell
-$ ./add_user.sh meier@entropiesenke.de 12345
+$ ./user.sh add meier@entropiesenke.de 12345
 Created user 'meier@entropiesenke.de' with password provided.
 ```
+
+## List all users
+
+```shell
+$ ./user.sh list
+```
+
+Displays a list of all users and their inbox sizes.
 
 ### Delete a user
 
 ```shell
-$ ./del_user.sh jens@wombathub.de
+$ ./user.sh del jens@wombathub.de
 Deleted 'jens@wombathub.de'.
 ```
 
@@ -112,7 +122,7 @@ Optionally, the email inbox (all of the user's emails) can also be deleted.
 If the inbox is not deleted, the user can later be re-created (see `add_user.sh`) to re-enable access.
 
 ```shell
-$ ./del_user.sh --purge-inbox jens@wombathub.de
+$ ./user.sh del --purge-inbox jens@wombathub.de
 Deleted 'jens@wombathub.de' and purged mail/inboxes/wombathub.de/jens@wombathub.de.
 ```
 
@@ -136,7 +146,7 @@ The account `karl@wombathub.de` must of course exist for this to work.
 
 **Update the aliases after changing `_server_workspace_/etc/postfix/valias` by running**
 ```
-$ ./update_aliases.sh
+$ ./user.sh update-aliases
 ```
 
 ## Issues and workarounds

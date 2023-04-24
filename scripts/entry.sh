@@ -29,12 +29,11 @@ if ! test -d /host/etc/letsencrypt/live ;  then
     certbot certonly --non-interactive --webroot --webroot-path /host/srv/www/html \
          --agree-tos --email "${ADMIN_EMAIL}" \
         -d "${HOSTNAME}"
-
-    init_srv_cfg letsencrypt
 else
     echo "##### ENTRY: checking for certificate renewals"
     certbot renew --non-interactive --webroot --webroot-path /host/srv/www/html
 fi
+init_srv_cfg letsencrypt
 
 echo "##### ENTRY: Processing postfix."
 init_srv_cfg postfix
