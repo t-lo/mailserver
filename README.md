@@ -29,6 +29,13 @@ DNS is a requirement for getting letsencrypt certificates.
 4. `./user.sh del jens@wombathub.de` del user `jens@wombathub.de`. Use `.. --purge-inbox ..` to also delete all emails.
 5. Edit `_server_workspace_/etc/postfix/valias` (`<alias email>  <domain user>` key value, separated by space), then run `./user.sh update-aliases`.
 
+**Client set-up for mail server users**
+
+1. *Username*: is the `user@domain` name supplied to `user.sh add ...`. Password is the password provided (or generated).
+2. SMTP/IMAP server is `HOSTNAME`.
+   SMTP is available via STARTTLS at port 25, and via SSL/TLS at port 465.
+   IMAP is on port 143, IMAPS on 993.
+
 ## Set up your mail server
 
 Create a file `settings.env` (e.g. from the skeleton `settings.env.empty` provided with this repo); then fill in the following.
@@ -148,6 +155,21 @@ The account `karl@wombathub.de` must of course exist for this to work.
 ```
 $ ./user.sh update-aliases
 ```
+
+### Mail client settings
+
+**Server settings**
+
+The server supports plain SMTP (enforces STARTTLS), SMTP over SSL, IMAP, and IMAP over SSL.
+- The mail server (for both sending and receiving) is `HOSTNAME`.
+- SMTP:
+  - Port 25 w/ STARTTLS
+  - Port 465 w/ SSL/TLS
+- IMAP:
+  - Port 143 (STARTTLS)
+  - Port 993 w/ SSL/TLS
+
+Either "plain" or "login" login is supported. Username is the full `user@domain` name supplied to `user.sh add ...`. Password is the password provided (or generated).
 
 ## Issues and workarounds
 
