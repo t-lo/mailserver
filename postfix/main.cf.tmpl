@@ -90,7 +90,6 @@ smtpd_recipient_restrictions=
         permit_sasl_authenticated,
         reject_unknown_client_hostname,
         reject_unauth_destination,
-        check_sender_access pcre:/etc/postfix/sender_access,
         reject_rbl_client zen.spamhaus.org,
         reject_rhsbl_client dbl.spamhaus.org,
         permit

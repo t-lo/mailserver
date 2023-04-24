@@ -26,7 +26,7 @@ RUN apk update \
                ca-certificates-bundle dovecot dovecot-pigeonhole-plugin \
                dovecot-lmtpd gettext openssl fail2ban pwgen bind-tools curl
 
-COPY caddy/Caddyfile.http /etc/caddy/
+COPY caddy/Caddyfile.http caddy/Caddyfile.https.tmpl /etc/caddy/
 COPY dovecot/dovecot.conf /etc/dovecot/
 COPY dovecot/conf.d/* /etc/dovecot/conf.d/
 

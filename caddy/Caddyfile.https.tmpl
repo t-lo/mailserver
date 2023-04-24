@@ -1,0 +1,28 @@
+#
+# HTTPS server used for letsencrypt renewals and Grafana access
+#
+
+:80 {
+	root * /host/srv/www/html
+	file_server
+	log {
+		output file /host/var/log/caddy.log
+	}
+}
+
+:443 {
+	tls /etc/letsencrypt/live/${HOSTNAME}/fullchain.pem /etc/letsencrypt/live/${HOSTNAME}/privkey.pem
+	file_server
+	log {
+		output file /host/var/log/caddy.log
+	}
+
+        handle /monitoring/* {
+                uri strip_prefix /monitoring
+                reverse_proxy mailserver-monitoring-grafana:3000 {
+                        header_up Host {host}
+                        header_up X-Forwarded-Proto https
+                        header_up X-Real-IP {remote_host}
+                }
+        }
+}

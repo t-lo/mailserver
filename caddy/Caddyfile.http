@@ -1,5 +1,5 @@
 #
-# Temporary HTTP server used for bootstrapping letsencrypt
+# HTTP server used for bootstrapping letsencrypt and for handling renewals
 #
 
 :80 {

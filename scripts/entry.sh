@@ -57,7 +57,12 @@ postfix start
 dovecot
 
 if test "${METRICS:-}" = "true" ; then
+    echo "   ## ENTRY: Metrics / Monitoring services requested"
+    echo "             Starting postfix_exporter and restarting Caddy on HTTPS"
     /postfix_exporter --postfix.logfile_path /host/var/log/postfix.log 1>/host/var/log/postfix_exporter.log 2>&1 &
+    envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
+    caddy stop
+    caddy start --config /host/etc/caddy/Caddyfile.https
 fi
 
 echo
