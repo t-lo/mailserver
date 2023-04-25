@@ -1,6 +1,6 @@
 global:
-  scrape_interval:     15s
-  evaluation_interval: 15s
+  scrape_interval:     5s
+  evaluation_interval: 5s
 
 scrape_configs:
   - job_name: 'postfix'
@@ -12,3 +12,8 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['mailserver:9900']
+
+  - job_name: 'pushgateway'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mailserver-prometheus-pushgateway:9091']
