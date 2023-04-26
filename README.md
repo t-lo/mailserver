@@ -25,11 +25,12 @@ DNS is a requirement for getting letsencrypt certificates.
 
 1. Create an A record for `HOSTNAME` pointing to your server's public IP, and a (reverse-DNS) PTR record for your server's public IP to resolve to `HOSTNAME`.
 2. Add an MX record to `DOMAIN` and (if applicable) `ADDITIONAL_DOMAINS` and point it to `HOSTNAME`.
-3. Validate DNS settings:
+3. Add an [SPF](https://en.wikipedia.org/wiki/Sender_Policy_Framework) record to `DOMAIN` and (if applicable) `ADDITIONAL_DOMAINS`. Example syntax using `HOSTNAME`'s publiv IPv4 address: `"v=spf1 a mx ip4:<ipv4> -all"`.
+4. Basic validation of DNS settings:
    ```shell
-   docker run --rm -ti --entrypoint /dns_sanity.sh --env-file settings.env --name mailserver-sanitycheck ghcr.io/t-lo/mailserver
+   ./dns_check.sh
    ```
-
+5. Use https://www.checktls.com/TestReceiver or https://www.checktls.com/TestReceiver for more thorough checks.
 
 **Start server**
 
@@ -99,17 +100,23 @@ Letsencrypt requires a correct A record to be set in order to grant certificates
 Complementarily, create a PTR for your server's public IP address to `HOSTNAME`.
 When sending email, other mail servers will look up your server's A record, reverse-DNS resolve the IP address via the PTR record, and compare the results.
 
-**MX records for all domains served by the mailserver**
+**MX and SPF records for all domains served by the mailserver**
 
 Also, every domain served by the mailserver (both the main `DOMAIN` as well as additional domains listed in `ADDITIONAL_DOMAINS`) 
 
 If A and PTR do not match it is more likey that mails sent from your server will end up in SPAM - or outright rejected.
 
+Similarly, add an [SPF](https://en.wikipedia.org/wiki/Sender_Policy_Framework) record to all domains served by the mailserver.
+SPF defines which IP addresses are allowed to send mail for a domain.
+Contrary to MX, SPF does not use a specific DNS entry type - instead, SPF information is recorded in a TXT entry.
+A very simple TXT SPF record is e.g. `"v=spf1 a mx ip4:<ipv4> -all"` (replace `<ipv4>` with the mail server's public IP).
+Add this TXT record to all domains (`DOMAIN` and `ADDITIONAL_DOMAINS` if you use these).
+
 **Test your DNS set-up**
 
-The repository supplies a script to check most basic DNS settings. More complex checks are available via e.g. https://mxtoolbox.com/dnscheck.aspx
+The repository supplies a script to check most basic DNS settings. More complex checks are available via e.g.https://www.checktls.com/TestReceiver and https://mxtoolbox.com/dnscheck.aspx.
 ```shell
-docker run --rm -ti --entrypoint /dns_sanity.sh --env-file settings.env --name mailserver-sanitycheck ghcr.io/t-lo/mailserver
+./dns_check.sh
 ```
 
 ## Start the mail server container

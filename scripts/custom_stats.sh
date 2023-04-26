@@ -32,7 +32,9 @@ while true; do
     fi
 
     sleep_time="$((push_interval_s - (t2-t1) ))"
-    sleep $sleep_time
+    if test "$sleep_time" -gt 0; then
+        sleep $sleep_time
+    fi
 done
 
 echo "Stopping custom stats exporter."

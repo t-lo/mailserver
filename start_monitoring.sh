@@ -10,8 +10,10 @@ docker network connect mailserver-monitoring-internal mailserver
 trap 'docker network disconnect mailserver-monitoring-internal mailserver; docker network rm mailserver-monitoring-internal' EXIT
 
 # Make prometheus DB bind-mount directory write-able for in-container Prometheus user id
-mkdir -p $(pwd)/_server_workspace_/prometheus-data
-chown -R 65534:root $(pwd)/_server_workspace_/prometheus-data
+mkdir -p $(pwd)/_server_workspace_/prometheus-data \
+         $(pwd)/_server_workspace_/prometheus-pushgateway
+chown -R 65534:root $(pwd)/_server_workspace_/prometheus-data \
+                    $(pwd)/_server_workspace_/prometheus-pushgateway
 
 # Start prometheus and pushgateway containers in the background
 docker run --rm --network mailserver-monitoring-internal \
