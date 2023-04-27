@@ -31,16 +31,14 @@ FROM alpine
 COPY --from=builder /postfix_exporter /prips /
 RUN apk update \
     && apk upgrade \
-    && apk add postfix certbot opendkim opendmarc caddy \
+    && apk add postfix certbot opendkim opendkim-utils opendmarc caddy \
                ca-certificates-bundle dovecot dovecot-pigeonhole-plugin \
                dovecot-lmtpd gettext openssl fail2ban pwgen bind-tools curl jq
 
-COPY caddy/Caddyfile.http caddy/Caddyfile.https.tmpl /etc/caddy/
-COPY dovecot/dovecot.conf /etc/dovecot/
-COPY dovecot/conf.d/* /etc/dovecot/conf.d/
-
-COPY postfix/main.cf.tmpl /etc/postfix/
-COPY postfix/master.cf /etc/postfix/
+COPY caddy/* /etc/caddy/
+COPY dovecot/* /etc/dovecot/
+COPY opendkim/* /etc/opendkim/
+COPY postfix/* /etc/postfix/
 RUN touch /etc/postfix/vuser /etc/postfix/valias
 
 RUN addgroup -g 2001 mailuser \

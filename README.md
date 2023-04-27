@@ -2,12 +2,7 @@
 
 Dockerised mailserver, inspired by https://jan.wildeboer.net/2022/08/Email-1-Postfix-2022/ .
 
-# How to use
-
-To get started, you'll need an internet-connected server as well as a DNS name pointing to it.
-DNS is a requirement for getting letsencrypt certificates.
-
-## TL;DR
+# TL;DR
 
 **Set up server**
 
@@ -52,6 +47,11 @@ DNS is a requirement for getting letsencrypt certificates.
 2. SMTP/IMAP server is `HOSTNAME`.
    SMTP is available via STARTTLS at port 25, and via SSL/TLS at port 465.
    IMAP is on port 143, IMAPS on 993.
+
+# How to use
+
+To get started, you'll need an internet-connected server as well as a DNS name pointing to it.
+DNS is a requirement for getting letsencrypt certificates.
 
 ## Set up your mail server
 

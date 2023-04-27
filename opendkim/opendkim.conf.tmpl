@@ -1,0 +1,28 @@
+BaseDirectory          /host/opendkim/run
+
+Mode                   sv
+
+LogResults             yes
+LogWhy                 yes
+Syslog                 yes
+SyslogSuccess          yes
+
+Canonicalization       relaxed/simple
+
+Selector                default
+KeyTable                /etc/opendkim/keytable
+SigningTable            refile:/etc/opendkim/signingtable
+
+Socket                  inet:8891@localhost
+umask                   002
+
+ReportAddress           ${ADMIN_EMAIL}
+SendReports             yes
+
+PidFile                /run/opendkim.pid
+
+ExternalIgnoreList      refile:/etc/opendkim/TrustedHosts
+InternalHosts           refile:/etc/opendkim/TrustedHosts
+
+Syslog                  Yes
+SyslogSuccess           Yes
