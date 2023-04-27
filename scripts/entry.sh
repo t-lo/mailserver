@@ -58,8 +58,10 @@ dovecot
 if test "${METRICS:-}" = "true" ; then
     echo "   ## ENTRY: Metrics / Monitoring services requested"
     echo "             Starting postfix_exporter/custom stats and restarting Caddy on HTTPS"
-    /postfix_exporter --postfix.logfile_path /host/var/log/postfix.log 1>/host/var/log/postfix_exporter.log 2>&1 &
-    /custom_stats.sh --postfix.logfile_path /host/var/log/postfix.log 1>/host/var/log/custom_stats.log 2>&1 &
+    setsid -c /postfix_exporter --postfix.logfile_path /host/var/log/postfix.log \
+                1>/host/var/log/postfix_exporter.log 2>&1 &
+    setsid -c /custom_stats.sh --postfix.logfile_path /host/var/log/postfix.log \
+                1>/host/var/log/custom_stats.log 2>&1 &
     envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
     caddy stop
     caddy start --config /host/etc/caddy/Caddyfile.https

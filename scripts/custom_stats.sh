@@ -23,8 +23,12 @@ function emit_mailbox_sizes() {
 echo "Starting custom stats exporter."
 
 while true; do
+
     t1="$(date +%s)"
+
     emit_mailbox_sizes | ${curl_pgw}
+    /dns_sanity.sh prometheus | ${curl_pgw}
+
     t2="$(date +%s)"
 
     if test -f /.stop_custom_stats ; then
