@@ -25,3 +25,4 @@ function download() {
 download "psfx" "/host/postfix.json"
 download "dvct" "/host/dovecot.json"
 download "dnsy" "/host/dns-sanity.json"
+download "main" "/host/main.json"

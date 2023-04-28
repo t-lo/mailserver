@@ -41,6 +41,136 @@
           "mappings": [
             {
               "options": {
+                "0": {
+                  "color": "dark-red",
+                  "index": 0,
+                  "text": "Error"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "OK"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 5,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 16,
+          "valueSize": 18
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "dns_sanity_domain_mx_record{domain!=\"\"}",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "MX {{domain}}",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "dns_sanity_domain_spf_record{domain!=\"\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "SPF {{domain}}",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "dns_sanity_domain_dkim_record{domain!=\"\"}",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "DKIM {{domain}}",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "dns_sanity_domain_dmarc_record{domain!=\"\"}",
+          "hide": false,
+          "legendFormat": "DMARC {{domain}}",
+          "range": true,
+          "refId": "D"
+        }
+      ],
+      "title": "Domains DNS sanity",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
                 "match": "null",
                 "result": {
                   "color": "dark-red",
@@ -78,9 +208,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 0,
+        "h": 3,
+        "w": 7,
+        "x": 5,
         "y": 0
       },
       "id": 2,
@@ -96,10 +226,7 @@
           "fields": "/.*/",
           "values": false
         },
-        "text": {
-          "titleSize": 20,
-          "valueSize": 40
-        },
+        "text": {},
         "textMode": "auto"
       },
       "pluginVersion": "9.4.7",
@@ -187,9 +314,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 13,
-        "w": 4,
-        "x": 6,
+        "h": 3,
+        "w": 6,
+        "x": 12,
         "y": 0
       },
       "id": 4,
@@ -197,7 +324,7 @@
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "center",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -206,8 +333,7 @@
           "values": false
         },
         "text": {
-          "titleSize": 20,
-          "valueSize": 40
+          "titleSize": 15
         },
         "textMode": "auto"
       },
@@ -257,23 +383,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "dark-red",
-                  "index": 0,
-                  "text": "Error"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 1,
-                  "text": "OK"
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -291,27 +401,27 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 13,
-        "w": 14,
-        "x": 10,
+        "h": 3,
+        "w": 6,
+        "x": 18,
         "y": 0
       },
-      "id": 3,
+      "id": 7,
       "options": {
-        "colorMode": "background",
+        "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "center",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/^spf$/",
           "values": false
         },
         "text": {
-          "titleSize": 20,
-          "valueSize": 40
+          "titleSize": 10,
+          "valueSize": 20
         },
         "textMode": "auto"
       },
@@ -324,31 +434,25 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "dns_sanity_domain_mx_record{domain!=\"\"}",
+          "expr": "dns_sanity_example_spf_record",
           "format": "time_series",
           "instant": true,
-          "legendFormat": "MX {{domain}}",
+          "legendFormat": "{{spf}}",
           "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "dns_sanity_domain_spf_record{domain!=\"\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "SPF {{domain}}",
-          "range": false,
-          "refId": "B"
         }
       ],
-      "title": "Domains DNS sanity",
-      "transformations": [],
+      "title": "Domain SPF record (copy+paste)",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": [
+              "spf"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -362,67 +466,73 @@
             "mode": "thresholds"
           },
           "custom": {
-            "fillOpacity": 70,
-            "lineWidth": 0,
-            "spanNulls": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false,
+            "minWidth": 50
           },
-          "decimals": 0,
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "dark-red",
-                  "index": 0,
-                  "text": "Error"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 1,
-                  "text": "OK"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "max": 1,
-          "min": 0,
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-red",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "green",
-                "value": 1
+                "color": "red",
+                "value": 80
               }
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 97
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "domain"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 181
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 10,
-        "x": 0,
-        "y": 13
+        "h": 7,
+        "w": 19,
+        "x": 5,
+        "y": 3
       },
-      "id": 6,
+      "id": 9,
       "options": {
-        "alignValue": "left",
-        "legend": {
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": false
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "mergeValues": false,
-        "rowHeight": 0.9,
-        "showValue": "never",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "9.4.7",
       "targets": [
@@ -433,32 +543,42 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "dns_sanity_server_a_record{hostname!=\"\"}",
-          "format": "time_series",
-          "instant": false,
-          "legendFormat": "DNS A {{hostname}}",
-          "range": true,
+          "expr": "dns_sanity_example_dmarc_record",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "dns_sanity_server_ptr_record{ip!=\"\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "Reverse DNS PTR {{ip}}",
-          "range": true,
-          "refId": "B"
         }
       ],
-      "title": "Server DNS sanity",
-      "transformations": [],
-      "type": "state-timeline"
+      "title": "DMARC records (copy+paste to DNS)",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "dmarc",
+                "domain",
+                "host"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "dmarc": 2,
+              "domain": 1,
+              "host": 0
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": {
@@ -471,64 +591,84 @@
             "mode": "thresholds"
           },
           "custom": {
-            "fillOpacity": 70,
-            "lineWidth": 0,
-            "spanNulls": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false,
+            "minWidth": 50
           },
           "mappings": [
             {
               "options": {
-                "0": {
-                  "color": "dark-red",
+                "pattern": "/\\\\\"/g",
+                "result": {
                   "index": 0,
-                  "text": "Error"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 1,
-                  "text": "OK"
+                  "text": "\""
                 }
               },
-              "type": "value"
+              "type": "regex"
             }
           ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-red",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "green",
-                "value": 1
+                "color": "red",
+                "value": 80
               }
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 189
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "domain"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 181
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 14,
-        "x": 10,
-        "y": 13
+        "h": 7,
+        "w": 19,
+        "x": 5,
+        "y": 10
       },
-      "id": 5,
+      "id": 10,
       "options": {
-        "alignValue": "left",
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "mergeValues": false,
-        "rowHeight": 0.9,
-        "showValue": "auto",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "9.4.7",
       "targets": [
@@ -539,32 +679,42 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "dns_sanity_domain_mx_record{domain!=\"\"}",
-          "format": "time_series",
-          "instant": false,
-          "legendFormat": "MX {{domain}}",
-          "range": true,
+          "expr": "dns_sanity_example_dkim_record",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "dns_sanity_domain_spf_record{domain!=\"\"}",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "SPF {{domain}}",
-          "range": true,
-          "refId": "B"
         }
       ],
-      "title": "Domains DNS sanity history",
-      "transformations": [],
-      "type": "state-timeline"
+      "title": "DMARC records (copy+paste to DNS)",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "domain",
+                "host",
+                "dkim"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "dmarc": 2,
+              "domain": 1,
+              "host": 0
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
     }
   ],
   "refresh": "",
@@ -583,6 +733,6 @@
   "timezone": "",
   "title": "DNS sanity",
   "uid": "dnsy",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

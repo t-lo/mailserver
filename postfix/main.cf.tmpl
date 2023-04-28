@@ -1,17 +1,16 @@
 # General settings
 
-mydomain = ${DOMAIN}
 myhostname = ${HOSTNAME}
 
-myorigin = $mydomain
+# mydomain = ${DOMAIN}
+# myorigin = $mydomain
+myorigin = ${DOMAIN}
 
 inet_interfaces = all
 inet_protocols = ipv4
 
-
-mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
-append_dot_mydomain = no
-biff = no
+#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+mydestination = $myhostname, localhost
 
 # support gmail-like user name suffixes, e.g. "kenny+spam@mydomain.net" maps to kenny@mydomain.net
 recipient_delimiter = +
@@ -20,11 +19,12 @@ recipient_delimiter = +
 virtual_mailbox_base = /host/mail/inboxes
 virtual_mailbox_maps = lmdb:/etc/postfix/vuser
 virtual_transport = lmtp:unix:private/dovecot-lmtp
+
 # gid/uid 2001 is "mailuser" created in Dockerfile
 virtual_uid_maps = static:2001
 virtual_gid_maps = static:2001
 virtual_alias_maps = lmdb:/etc/postfix/valias
-virtual_mailbox_domains = ${ADDITIONAL_DOMAINS}
+virtual_mailbox_domains = ${DOMAIN} ${ADDITIONAL_DOMAINS}
 
 # Wire up dovecot, opendkim, opendmarc
 mailbox_transport = lmtp:unix:private/dovecot-lmtp
@@ -38,9 +38,6 @@ non_smtpd_milters = $smtpd_milters
 
 mailbox_size_limit = 0
 message_size_limit = 52428800
-
-maillog_file_prefixes = /host/var/log/
-maillog_file = /host/var/log/postfix.log
 
 # Authentication
 smtpd_sasl_type = dovecot

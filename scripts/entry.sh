@@ -13,7 +13,7 @@ function init_srv_cfg() {
     fi
 
     rm -rf "/etc/${service}"
-    ln -s "/host/etc/${service}" "/etc/${service}"
+    ln -vs "/host/etc/${service}" "/etc/${service}"
 
 }
 # --
@@ -57,9 +57,9 @@ function init_dovecot() {
 # --
 
 function start_custom_metrics() {
-    setsid -c /postfix_exporter --postfix.logfile_path /host/var/log/postfix.log \
+    setsid -c /postfix_exporter --postfix.logfile_path /host/var/log/syslog \
                 1>/host/var/log/postfix_exporter.log 2>&1 &
-    setsid -c /custom_stats.sh --postfix.logfile_path /host/var/log/postfix.log \
+    setsid -c /custom_stats.sh \
                 1>/host/var/log/custom_stats.log 2>&1 &
     envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
     caddy stop
@@ -69,13 +69,13 @@ function start_custom_metrics() {
 
 function init_opendkim() {
     init_srv_cfg opendkim
-    envsubst '$ADMIN_EMAIL' < /etc/opendkim/opendkim.conf.tmpl > /etc/opendkim/opendkim.conf
+    envsubst '$ADMIN_EMAIL $DKIM_KEY_SELECTOR' < /etc/opendkim/opendkim.conf.tmpl > /etc/opendkim/opendkim.conf
 
     if !    test -f "/etc/opendkim/keys/${DKIM_KEY_SELECTOR}.private" \
               -a -f "/etc/opendkim/keys/${DKIM_KEY_SELECTOR}.txt" ; then 
         echo "##### ENTRY: Generating DKIM key for ${HOSTNAME}, selector '${DKIM_KEY_SELECTOR}'."
         mkdir -p -m 700 /etc/opendkim/keys/
-        opendkim-genkey -vv -b 4096 -d "${HOSTNAME}"  -D /etc/opendkim/keys/ -s "${DKIM_KEY_SELECTOR}"
+        opendkim-genkey -vv -b 2048 -d "${HOSTNAME}"  -D /etc/opendkim/keys/ -s "${DKIM_KEY_SELECTOR}"
     fi
 
     echo "##### ENTRY: Generating openDKIM domains verification and signing tables."
@@ -88,13 +88,17 @@ function init_opendkim() {
             >> /etc/opendkim/signingtable
     done
 
+    mkdir -p /host/run/opendkim
 }
 # --
 
 function init_opendmarc() {
     init_srv_cfg opendmarc
-    
+    envsubst '$HOSTNAME' < /etc/opendmarc/opendmarc.conf.tmpl > /etc/opendmarc/opendmarc.conf
+    mkdir -p /host/run/opendmarc
 }
+# --
+
 #
 #   M A I N
 #
@@ -126,7 +130,8 @@ init_dovecot
 echo "##### ENTRY: Starting services"
 postfix start
 dovecot
-opendkim
+opendkim -A
+opendmarc -A -c /etc/opendmarc/opendmarc.conf
 
 if test "${METRICS:-}" = "true" ; then
     echo "   ## ENTRY: Metrics / Monitoring services requested"
@@ -138,6 +143,6 @@ echo
 echo "##### Mail server system up and running on ${HOSTNAME}."
 echo
 
-sleep 5
+sleep 2
 
 tail -f /host/var/log/*

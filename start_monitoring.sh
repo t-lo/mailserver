@@ -2,8 +2,16 @@
 
 cd "$(dirname "$0")"
 
+mailserver_container="mailserver"
+
+echo -n "Waiting for '$mailserver_container' container to come up ..."
+while ! docker ps -f "name=^${mailserver_container}$" | grep -qw "${mailserver_container}" ; do
+    echo -n "."
+    sleep 1
+done
+
 # Create internal network and connect to mailserver container
-docker network rm mailserver-monitoring-internal || true
+docker network rm mailserver-monitoring-internal >/dev/null 2>&1 || true
 docker network create --internal --subnet 10.0.0.0/24 mailserver-monitoring-internal
 docker network connect mailserver-monitoring-internal mailserver
 
@@ -19,7 +27,7 @@ chown -R 65534:root $(pwd)/_server_workspace_/prometheus-data \
 docker run --rm --network mailserver-monitoring-internal \
            -v $(pwd)/prometheus/prometheus.yaml:/prometheus.yaml \
            -v $(pwd)/_server_workspace_/prometheus-data:/prometheus-data \
-           --name mailserver-prometheus\
+           --name mailserver-prometheus \
            prom/prometheus:latest \
                 --config.file=/prometheus.yaml \
                 --storage.tsdb.path=/prometheus-data \

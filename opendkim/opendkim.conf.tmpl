@@ -1,4 +1,4 @@
-BaseDirectory          /host/opendkim/run
+BaseDirectory          /host/run/opendkim
 
 Mode                   sv
 
@@ -7,11 +7,11 @@ LogWhy                 yes
 Syslog                 yes
 SyslogSuccess          yes
 
-Canonicalization       relaxed/simple
-
-Selector                default
+Selector                ${DKIM_KEY_SELECTOR}
 KeyTable                /etc/opendkim/keytable
 SigningTable            refile:/etc/opendkim/signingtable
+
+Canonicalization        relaxed/simple
 
 Socket                  inet:8891@localhost
 umask                   002

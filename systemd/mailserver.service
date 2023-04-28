@@ -1,0 +1,13 @@
+[Unit]
+Description=Mailserver docker container
+
+[Service]
+Restart=always
+WorkingDirectory=/opt/mailserver
+# Add <http-port> <https-port> positional parameters if you use http proxy / custom HTTPS port
+ExecStart=/opt/mailserver/start_mailserver.sh
+ExecStop=docker stop -t 2 mailserver
+
+[Install]
+WantedBy=network.service
+WantedBy=multi-user.target

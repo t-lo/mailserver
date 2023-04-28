@@ -35,15 +35,17 @@ RUN apk update \
                ca-certificates-bundle dovecot dovecot-pigeonhole-plugin \
                dovecot-lmtpd gettext openssl fail2ban pwgen bind-tools curl jq
 
-COPY caddy/* /etc/caddy/
-COPY dovecot/* /etc/dovecot/
-COPY opendkim/* /etc/opendkim/
-COPY postfix/* /etc/postfix/
+COPY caddy/ /etc/caddy/
+COPY dovecot/ /etc/dovecot/
+COPY opendkim/ /etc/opendkim/
+COPY opendmarc/ /etc/opendmarc/
+COPY postfix/ /etc/postfix/
 RUN touch /etc/postfix/vuser /etc/postfix/valias
 
 RUN addgroup -g 2001 mailuser \
     && adduser -G mailuser -u 2001 -D -H mailuser
 
-COPY --chmod=755 scripts/* /
+COPY scripts/ /
+RUN chmod 755 /*.sh
 
 entrypoint /entry.sh

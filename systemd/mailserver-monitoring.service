@@ -1,0 +1,15 @@
+[Unit]
+Description=Mailserver docker container
+Requires=mailserver.service
+After=mailserver.service
+
+[Service]
+Restart=always
+WorkingDirectory=/opt/mailserver
+ExecStart=/opt/mailserver/start_monitoring.sh
+ExecStop=docker stop -t 2 mailserver-monitoring-grafana mailserver-prometheus mailserver-prometheus-pushgateway
+
+
+[Install]
+WantedBy=network.service
+WantedBy=multi-user.target
