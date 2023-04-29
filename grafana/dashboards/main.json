@@ -49,7 +49,7 @@
         "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/dnsy/\">DNS Health</a></h3>",
         "mode": "html"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "type": "text"
     },
     {
@@ -73,7 +73,7 @@
         "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/dvct/\">Dovecot IMAP server</a></h3>",
         "mode": "html"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "type": "text"
     },
     {
@@ -143,7 +143,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -228,7 +228,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -300,6 +300,7 @@
       },
       "id": 14,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -316,7 +317,7 @@
           }
         ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -515,6 +516,7 @@
       },
       "id": 12,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -523,10 +525,10 @@
           ],
           "show": false
         },
-        "showHeader": true,
+        "showHeader": false,
         "sortBy": []
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -627,7 +629,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -746,6 +748,7 @@
       },
       "id": 10,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -754,9 +757,9 @@
           ],
           "show": false
         },
-        "showHeader": true
+        "showHeader": false
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -845,6 +848,7 @@
       },
       "id": 19,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -861,7 +865,7 @@
           }
         ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -1029,7 +1033,7 @@
         "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/psfx/\">Postfix SMTP server</a></h3>",
         "mode": "html"
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "9.5.1",
       "type": "text"
     },
     {
@@ -1687,6 +1691,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "main",
-  "version": 4,
+  "version": 2,
   "weekStart": ""
 }

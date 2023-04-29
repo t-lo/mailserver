@@ -13,6 +13,8 @@ Dockerised mailserver, inspired by https://jan.wildeboer.net/2022/08/Email-1-Pos
 - Basic user handling (add/delete, aliases)
 - Monitoring suite with dashboards for mailserver, IMAP server, and DNS sanity
 
+<img src="dashboard.png">
+
 # TL;DR
 
 **Set up server**
@@ -53,9 +55,9 @@ This can take a few minutes.
    ```
    SPF, DMARC, and DKIM checks will fail in this run because these were not set up yet. <br/>
    The script will print out example SPF, DMARC, and DKIM DNS entries to use in the next step.
-3. Add an [SPF](https://en.wikipedia.org/wiki/Sender_Policy_Framework) record to `DOMAIN` and (if applicable) `ADDITIONAL_DOMAINS`. Example syntax using `HOSTNAME`'s publiv IPv4 address: `"v=spf1 a mx ip4:<ipv4> -all"`.
-4. Configure SPF, DMARC, and DKIM DNS entries for all domains based on the `dns_check.sh` script output.
-5. Run the validation script again:
+3. Add SPF, DMARC, and DKIM DNS entries for all domains based on the `dns_check.sh` script output. <br />
+   Alternatively, consult the DNS dashboard (if you use monitoring) at `https://HOSTNAME/monitoring/d/dnsy/dns-sanity` - it also has SPF, DMARC, and DKIM records for copy+pasting to your DNS provider.
+4. Run the validation script again:
    ```shell
    ./dns_check.sh
    ```
