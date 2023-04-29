@@ -12,5 +12,9 @@ exec docker run --rm  -p $http:80 -p $https:443 \
                          -p 25:25 -p 465:465 \
                          -p 143:143 -p 993:993 \
                          -v $(pwd)/_server_workspace_:/host --env-file settings.env \
+			 --cap-add CAP_AUDIT_READ \
+			 --cap-add CAP_DAC_READ_SEARCH \
+			 --cap-add CAP_NET_ADMIN \
+			 --cap-add CAP_NET_RAW \
                          --name mailserver \
                          ghcr.io/t-lo/mailserver

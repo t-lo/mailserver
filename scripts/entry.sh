@@ -18,6 +18,12 @@ function init_srv_cfg() {
 }
 # --
 
+function init_fail2ban() {
+    init_srv_cfg fail2ban
+    envsubst '$ADMIN_EMAIL $DKIM_KEY_SELECTOR' < /etc/fail2ban/jail.conf.tmpl > /etc/fail2ban/jail.conf
+}
+# --
+
 function check_letsencrypt() {
     if ! test -d /host/etc/letsencrypt/live ;  then
         echo "##### ENTRY: No certificates folder found in host directory; requesting certs for '${HOSTNAME}'."
@@ -106,11 +112,15 @@ function init_opendmarc() {
 echo "#################################  Startup $(date -Iseconds) #####################################"
 mkdir -p /host/var/log /host/srv/www/html /host/etc
 
-syslogd -O /host/var/log/syslog
+syslogd -O /host/var/log/syslog.log
+
+echo "##### ENTRY: Processing fail2ban."
+init_fail2ban
 
 echo "##### ENTRY: starting caddy."
 init_srv_cfg caddy
 caddy start --config /host/etc/caddy/Caddyfile.http
+
 
 echo "##### ENTRY: Processing letsencrypt."
 check_letsencrypt
@@ -145,4 +155,4 @@ echo
 
 sleep 2
 
-tail -f /host/var/log/*
+tail -f /host/var/log/*.log
