@@ -96,4 +96,5 @@ User management works transparently for both `DOMAIN` and `ADDITIONAL_DOMAINS`.
    SMTP is available via STARTTLS at port 25, and via SSL/TLS at port 465. <br/>
    IMAP is on port 143, IMAPS on 993.
 
-
+# Contribute
+See the [contributing](https://github.com/t-lo/mailserver/wiki#contributing) page of the project's wiki.
