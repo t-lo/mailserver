@@ -18,7 +18,7 @@ Dockerised mailserver, inspired by https://jan.wildeboer.net/2022/08/Email-1-Pos
 
 # TL;DR
 
-For detailed set-up and operations instructions please consult the [wiki](://github.com/t-lo/mailserver/wiki)
+For detailed set-up and operations instructions please consult the [wiki](https://github.com/t-lo/mailserver/wiki)
 
 **Set up server**
 
