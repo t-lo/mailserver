@@ -236,7 +236,7 @@ function check_all_domains() {
         echo "       As a result, remote mail servery may reject emails of these domains' users."
         echo
         echo "       To mitigate please add this TXT DMARC record (replace <DOMAIN> with the domain name):"
-        echo "         v=DMARC1;p=quarantine;sp=quarantine;pct=100;adkim=r;aspf=r;rua=mailto:abuse@<DOMAIN>;ruf=mailto:abuse@<DOMAIN>;ri=1800;fo=1"
+        echo "         v=DMARC1;p=quarantine;sp=quarantine;pct=100;adkim=r;aspf=r;rua=mailto:${ADMIN_EMAIL};ruf=mailto:${ADMIN_EMAIL};ri=1800;fo=1"
         echo "       for host"
         echo "         '_dmarc'"
         echo "       to the domains that failed the check. Refer to"
@@ -336,7 +336,7 @@ if $prometheus_mode; then
     echo "# HELP dns_sanity_example_dmarc_record Example DMARC record for copy+pasting into DNS set-up. Always 1."
     echo "# TYPE dns_sanity_example_dmarc_record gauge"
     for d in "${DOMAIN}" $(echo "${ADDITIONAL_DOMAINS}" | sed 's/,/ /g'); do
-        echo "dns_sanity_example_dmarc_record{domain=\"${d}\",host=\"_dmarc\",dmarc=\"v=DMARC1;p=quarantine;sp=quarantine;pct=100;adkim=r;aspf=r;rua=mailto:abuse@${d};ruf=mailto:abuse@${d};fo=1\"} 1"
+        echo "dns_sanity_example_dmarc_record{domain=\"${d}\",host=\"_dmarc\",dmarc=\"v=DMARC1;p=quarantine;sp=quarantine;pct=100;adkim=r;aspf=r;rua=mailto:${ADMIN_EMAIL};ruf=mailto:${ADMIN_EMAIL};fo=1\"} 1"
         echo "dns_sanity_example_dkim_record{domain=\"${d}\",host=\"${DKIM_KEY_SELECTOR}._domainkey\",dkim=\"${dkim_key}\"} 1"
     done
 

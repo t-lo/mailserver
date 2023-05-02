@@ -9,8 +9,8 @@ curl_pgw="curl -s --data-binary @- http://mailserver-prometheus-pushgateway:9091
 
 # Inbox sizes per user, domain, and on overall
 function emit_mailbox_sizes() {
-     echo "#TYPE email_inbox_size gauge"
-     du -d 2 -b /host/mail/inboxes/ \
+    echo "#TYPE email_inbox_size gauge"
+    du -d 2 -b /host/mail/inboxes/ \
          | awk -F/ '{ if ($6 == "")
                           $6="__total__";
                       print $1 " " $5 " " $6  }' \
@@ -20,6 +20,14 @@ function emit_mailbox_sizes() {
 }
 # --
 
+function emit_postmaster_unread_emails() {
+    local unread="$(ls /host/mail/inboxes/${DOMAIN}/${ADMIN_USER}@${DOMAIN}/Maildir/new/ 2>/dev/null | wc -l)"
+    echo "#TYPE postmaster_unread_emails gauge"
+    echo "postmaster_unread_emails{user=\"${ADMIN_USER}@${DOMAIN}\"} ${unread}"
+}
+# --
+
+
 echo "Starting custom stats exporter."
 
 while true; do
@@ -27,6 +35,7 @@ while true; do
     t1="$(date +%s)"
 
     emit_mailbox_sizes | ${curl_pgw}
+    emit_postmaster_unread_emails | ${curl_pgw}
     /dns_sanity.sh prometheus | ${curl_pgw}
 
     t2="$(date +%s)"

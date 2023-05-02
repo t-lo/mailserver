@@ -18,6 +18,7 @@ function usage() {
     echo "                                              one will be generated and printed if none was provided."
     echo "          del <user@domain> [--purge-inbox] - Remove user from mailserver. Optionally delete all"
     echo "                                              of user's emails."
+    echo "          passwd <user@domain> <new-pass>   - Update a user's password to <new-pass>."
     echo "          list                              - List users and perform basic sanity checks."
     echo "          update-aliases                    - Update aliases database (run this after editing"
     echo "                                              [workdir]/etc/postfix/valias)."
@@ -89,6 +90,7 @@ fi
 case "$1" in
     add) shift; docker exec -ti "${container}" /add_user.sh "${@}" ;;
     del) shift; docker exec -ti "${container}" /del_user.sh "${@}" ;;
+    passwd) shift; docker exec -ti "${container}" /passwd.sh "${@}" ;;
     update-aliases)
          shift; docker exec -ti "${container}" /update_aliases.sh;;  
     list) list_users "${container}";;

@@ -26,10 +26,13 @@ For detailed set-up and operations instructions please consult the [wiki](://git
    ```
    DOMAIN=
    HOSTNAME=
-   ADMIN_EMAIL=
+   ADMIN_USER_INITIAL_PASSWORD=
    ADDITIONAL_DOMAINS=
    ```
    If you leave `METRICS=true` also set `GF_SECURITY_ADMIN_PASSWORD=` or you won't be able to log into the metrics website.
+
+   All other settings are set to sane defaults.
+   Basic help is provided for all settings; review and update as you see fit.
 
 **Create A DNS entry for your mail server**
 
@@ -50,6 +53,11 @@ See https://github.com/t-lo/mailserver/wiki/Use-custom-ports-for-HTTP---HTTPS fo
 
 On first run the server will initialise, request letsencrypt certificates, generate DKIM keys, and generate DH parameters for the mail server's TLS connections.
 This can take a few minutes.
+
+Also, a default postmaster account `ADMIN_USER@DOMAIN` will be created.
+This account will receive letsencrypt certificate renewal notifications as well as abuse reports from other mailserver operators.
+Check the account's inbox regularly.
+The account's SMTP / IMAP password is `ADMIN_USER_INITIAL_PASSWORD` and can be changed later (see user management below).
 
 **Set up DNS for your domain**
 
@@ -85,9 +93,10 @@ User management works transparently for both `DOMAIN` and `ADDITIONAL_DOMAINS`.
 
 1. `./user.sh add meier@entropiesenke.de 12345` add user w/ password `12345`
 2. `./user.sh add jens@wombathub.de` add user and auto-generate (and print) password
-3. `./user.sh list` list users
-4. `./user.sh del jens@wombathub.de` del user `jens@wombathub.de`. Use `.. --purge-inbox ..` to also delete all emails.
-5. To manage aliases, edit `_server_workspace_/etc/postfix/valias` (`<alias email>  <domain user>` key value, separated by space), then run `./user.sh update-aliases`.
+3. `./user.sh passwd jens@wombathub.de 23456` change jens' password to `23456`.
+4. `./user.sh list` list users
+5. `./user.sh del jens@wombathub.de` del user `jens@wombathub.de`. Use `.. --purge-inbox ..` to also delete all emails.
+6. To manage aliases, edit `_server_workspace_/etc/postfix/valias` (`<alias email>  <domain user>` key value, separated by space), then run `./user.sh update-aliases`.
 
 **Client set-up for mail server users**
 

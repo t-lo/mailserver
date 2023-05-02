@@ -4,6 +4,7 @@
 # Run inside the mailserver container.
 
 # Read-access token to pull dashboard JSON. Get this from Grafana GUI.
+# Note that with newer Grafana versions you'll need to create a service account, then a token for that account.
 grafana_token=""
 
 url="$(eval echo "${GF_SERVER_ROOT_URL}org/apikeys")"
@@ -25,4 +26,5 @@ function download() {
 download "psfx" "/host/postfix.json"
 download "dvct" "/host/dovecot.json"
 download "dnsy" "/host/dns-sanity.json"
+download "f2bn" "/host/fail2ban.json"
 download "main" "/host/main.json"

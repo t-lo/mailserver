@@ -44,7 +44,7 @@ docker run --rm --network mailserver-monitoring-internal \
            prom/pushgateway:latest \
                 --persistence.file=/persist/data.dat 2>&1 | sed 's/^/PUSHGW: /' &
 
-docker run --rm --network mailserver-monitoring-internal \
+docker run --rm -i --network mailserver-monitoring-internal \
             --env-file settings.env \
 	    --env GF_LOG_MODE="console file" \
             -v $(pwd)/grafana/dashboards:/etc/grafana/provisioning/dashboards \

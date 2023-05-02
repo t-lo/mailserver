@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+export ADMIN_EMAIL="${ADMIN_USER}@${DOMAIN}"
+
 function init_srv_cfg() {
     local service="$1"
 
@@ -61,6 +63,11 @@ function init_dovecot() {
     if ! test -f /etc/dovecot/dh.pem ;  then
         echo "##### ENTRY: Generating DH parameters. Go fetch a tea?"
         openssl dhparam -out /etc/dovecot/dh.pem 4096
+    fi
+
+    if ! grep -qE "^${ADMIN_EMAIL}:" /etc/dovecot/passwd ; then
+        echo "##### ENTRY: Creating postmaster / admin account '${ADMIN_EMAIL}'"
+	/add_user.sh "${ADMIN_EMAIL}" "${ADMIN_USER_INITIAL_PASSWORD}"
     fi
 
     envsubst '$HOSTNAME' < /etc/dovecot/conf.d/10-ssl.conf.tmpl > /etc/dovecot/conf.d/10-ssl.conf
@@ -165,4 +172,8 @@ echo
 
 sleep 2
 
-tail -f /host/var/log/*.log
+# Caddy log is too noisy to tail
+tail -f /host/var/log/syslog.log \
+       	/host/var/log/custom_stats.log \
+	/host/var/log/fail2ban-prometheus-exporter.log  \
+	/host/var/log/postfix_exporter.log
