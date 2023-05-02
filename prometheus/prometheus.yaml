@@ -13,6 +13,11 @@ scrape_configs:
     static_configs:
       - targets: ['mailserver:9900']
 
+  - job_name: 'fail2ban'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['mailserver:9191']
+
   - job_name: 'pushgateway'
     scrape_interval: 5s
     static_configs:

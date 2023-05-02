@@ -269,6 +269,7 @@ action = %(action_)s
 
 
 [postfix]
+enabled  = true
 # To use another modes set filter parameter "mode" in jail.local:
 mode    = more
 port    = smtp,465,submission
@@ -277,13 +278,14 @@ backend = %(postfix_backend)s
 
 
 [sendmail-auth]
-
+enabled  = true
 port    = submission,465,smtp
 logpath = %(syslog_mail)s
 backend = %(syslog_backend)s
 
 
 [sendmail-reject]
+enabled  = true
 # To use more aggressive modes set filter parameter "mode" in jail.local:
 # normal (default), extra or aggressive
 # See "tests/files/logs/sendmail-reject" or "filter.d/sendmail-reject.conf" for usage example and details.
@@ -295,19 +297,19 @@ backend  = %(syslog_backend)s
 # dovecot defaults to logging to the mail syslog facility
 # but can be set by syslog_facility in the dovecot configuration.
 [dovecot]
-
+enabled  = true
 port    = pop3,pop3s,imap,imaps,submission,465,sieve
 logpath = %(dovecot_log)s
 backend = %(dovecot_backend)s
 
 [sieve]
-
+enabled  = true
 port   = smtp,465,submission
 logpath = %(dovecot_log)s
 backend = %(dovecot_backend)s
 
 [postfix-sasl]
-
+enabled  = true
 filter   = postfix[mode=auth]
 port     = smtp,465,submission,imap,imaps,pop3,pop3s
 # You might consider monitoring /var/log/mail.warn instead if you are
@@ -318,11 +320,13 @@ backend  = %(postfix_backend)s
 
 
 [pam-generic]
+enabled  = true
 # pam-generic filter can be customized to monitor specific subset of 'tty's
 banaction = %(banaction_allports)s
 logpath  = %(syslog_authpriv)s
 backend  = %(syslog_backend)s
 
 [grafana]
+enabled  = true
 port    = http,https
-logpath = /var/log/grafana/grafana.log
+logpath = /host/var/log/grafana/grafana.log

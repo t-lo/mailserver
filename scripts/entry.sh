@@ -20,6 +20,13 @@ function init_srv_cfg() {
 
 function init_fail2ban() {
     init_srv_cfg fail2ban
+
+    # Make sure grafana.log exists even if we don't use monitoring
+    # otherwise fail2ban refuses to start since a log file is missing for the grafana jail
+    mkdir -p /host/var/log/grafana/
+    touch /host/var/log/grafana/grafana.log
+    chown -R 472:root /host/var/log/grafana/
+
     envsubst '$ADMIN_EMAIL $DKIM_KEY_SELECTOR' < /etc/fail2ban/jail.conf.tmpl > /etc/fail2ban/jail.conf
 }
 # --
@@ -63,8 +70,10 @@ function init_dovecot() {
 # --
 
 function start_custom_metrics() {
-    setsid -c /postfix_exporter --postfix.logfile_path /host/var/log/syslog \
+    setsid -c /postfix_exporter --postfix.logfile_path /host/var/log/syslog.log \
                 1>/host/var/log/postfix_exporter.log 2>&1 &
+    setsid -c /fail2ban-prometheus-exporter \
+                1>/host/var/log/fail2ban-prometheus-exporter.log 2>&1 &
     setsid -c /custom_stats.sh \
                 1>/host/var/log/custom_stats.log 2>&1 &
     envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
@@ -142,6 +151,7 @@ postfix start
 dovecot
 opendkim -A
 opendmarc -A -c /etc/opendmarc/opendmarc.conf
+fail2ban-server
 
 if test "${METRICS:-}" = "true" ; then
     echo "   ## ENTRY: Metrics / Monitoring services requested"

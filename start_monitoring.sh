@@ -25,7 +25,7 @@ chown -R 65534:root $(pwd)/_server_workspace_/prometheus-data \
 
 #  Grafana user id 472
 mkdir -p _server_workspace_/var/log/grafana/
-chown 472:root _server_workspace_/var/log/grafana/
+chown -R 472:root _server_workspace_/var/log/grafana/
 
 # Start prometheus and pushgateway containers in the background
 docker run --rm --network mailserver-monitoring-internal \

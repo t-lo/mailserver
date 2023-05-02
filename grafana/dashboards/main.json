@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -57,10 +57,172 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false,
+            "minWidth": 50
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "# emails"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": false,
+        "sortBy": []
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "dovecot_mail_delivery_total",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "{{user}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Mails delivered",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "user",
+                "Value"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 10000000
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 2,
-        "w": 20,
-        "x": 4,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "email_inbox_size{domain=\"__total__\"}",
+          "legendFormat": "_",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 12,
+        "x": 12,
         "y": 0
       },
       "id": 22,
@@ -189,6 +351,14 @@
           "color": {
             "mode": "thresholds"
           },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false,
+            "minWidth": 50
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -199,34 +369,45 @@
               },
               {
                 "color": "red",
-                "value": 10000000
+                "value": 80
               }
             ]
           },
           "unit": "decbytes"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Size"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 2,
-        "w": 6,
-        "x": 4,
+        "h": 6,
+        "w": 4,
+        "x": 8,
         "y": 2
       },
-      "id": 8,
+      "id": 10,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
           "fields": "",
-          "values": false
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "textMode": "auto"
+        "showHeader": false
       },
       "pluginVersion": "9.5.1",
       "targets": [
@@ -236,13 +417,30 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "email_inbox_size{domain=\"__total__\"}",
-          "legendFormat": "_",
-          "range": true,
+          "exemplar": false,
+          "expr": "email_inbox_size{user!=\"__total__\", domain!=\"__total__\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "{{user}}",
+          "range": false,
           "refId": "A"
         }
       ],
-      "type": "stat"
+      "title": "User Inbox Size",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "user",
+                "Value"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": {
@@ -293,9 +491,9 @@
         ]
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 10,
+        "h": 8,
+        "w": 4,
+        "x": 12,
         "y": 2
       },
       "id": 14,
@@ -423,7 +621,7 @@
         ]
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 8,
         "x": 16,
         "y": 2
@@ -438,7 +636,8 @@
           "placement": "right",
           "showLegend": true,
           "sortBy": "Max",
-          "sortDesc": true
+          "sortDesc": true,
+          "width": 250
         },
         "tooltip": {
           "mode": "single",
@@ -463,103 +662,6 @@
       "title": "Successful Authentications (1s rate, 30s avg)",
       "transformations": [],
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false,
-            "minWidth": 50
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "# emails"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 4,
-        "y": 4
-      },
-      "id": 12,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": false,
-        "sortBy": []
-      },
-      "pluginVersion": "9.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "dovecot_mail_delivery_total",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "{{user}}",
-          "range": false,
-          "refId": "A"
-        }
-      ],
-      "title": "Mails delivered",
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "user",
-                "Value"
-              ]
-            }
-          }
-        }
-      ],
-      "type": "table"
     },
     {
       "datasource": {
@@ -605,7 +707,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 12,
         "w": 4,
         "x": 0,
         "y": 5
@@ -696,18 +798,64 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 4,
+        "y": 6
+      },
+      "id": 35,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/f2bn/\">Fail2Ban</a></h3>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.5.1",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
             },
-            "inspect": false,
-            "minWidth": 50
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -722,44 +870,31 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Size"
-              }
-            ]
           }
-        ]
+        },
+        "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
+        "h": 9,
+        "w": 8,
         "x": 4,
         "y": 8
       },
-      "id": 10,
+      "id": 36,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
+        "legend": {
+          "calcs": [
+            "lastNotNull"
           ],
-          "show": false
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
         },
-        "showHeader": false
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
-      "pluginVersion": "9.5.1",
       "targets": [
         {
           "datasource": {
@@ -767,30 +902,26 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "email_inbox_size{user!=\"__total__\", domain!=\"__total__\"}",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "{{user}}",
-          "range": false,
+          "expr": "f2b_jail_banned_current",
+          "legendFormat": "{{jail}} bans",
+          "range": true,
           "refId": "A"
-        }
-      ],
-      "title": "User Inbox Size",
-      "transformations": [
+        },
         {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "user",
-                "Value"
-              ]
-            }
-          }
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "f2b_jail_failed_current",
+          "hide": false,
+          "legendFormat": "{{jail}} fails",
+          "range": true,
+          "refId": "B"
         }
       ],
-      "type": "table"
+      "title": "Fail & Bans count",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -841,10 +972,10 @@
         ]
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 10,
-        "y": 8
+        "h": 7,
+        "w": 4,
+        "x": 12,
+        "y": 10
       },
       "id": 19,
       "options": {
@@ -971,10 +1102,10 @@
         ]
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 8,
         "x": 16,
-        "y": 8
+        "y": 10
       },
       "id": 21,
       "options": {
@@ -986,7 +1117,8 @@
           "placement": "right",
           "showLegend": true,
           "sortBy": "Max",
-          "sortDesc": true
+          "sortDesc": true,
+          "width": 250
         },
         "tooltip": {
           "mode": "single",
@@ -1021,7 +1153,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 17
       },
       "id": 17,
       "options": {
@@ -1099,7 +1231,7 @@
         "h": 7,
         "w": 7,
         "x": 0,
-        "y": 16
+        "y": 19
       },
       "id": 26,
       "options": {
@@ -1220,7 +1352,7 @@
         "h": 7,
         "w": 10,
         "x": 7,
-        "y": 16
+        "y": 19
       },
       "id": 24,
       "options": {
@@ -1342,7 +1474,7 @@
         "h": 7,
         "w": 7,
         "x": 17,
-        "y": 16
+        "y": 19
       },
       "id": 32,
       "options": {
@@ -1440,7 +1572,7 @@
         "h": 6,
         "w": 7,
         "x": 0,
-        "y": 23
+        "y": 26
       },
       "id": 30,
       "options": {
@@ -1538,7 +1670,7 @@
         "h": 6,
         "w": 7,
         "x": 7,
-        "y": 23
+        "y": 26
       },
       "id": 28,
       "options": {
@@ -1637,7 +1769,7 @@
         "h": 6,
         "w": 10,
         "x": 14,
-        "y": 23
+        "y": 26
       },
       "id": 34,
       "options": {
@@ -1691,6 +1823,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "main",
-  "version": 2,
+  "version": 5,
   "weekStart": ""
 }
