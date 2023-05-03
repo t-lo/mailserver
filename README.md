@@ -14,9 +14,7 @@ Dockerised mailserver, inspired by https://jan.wildeboer.net/2022/08/Email-1-Pos
 - Basic user handling (add/delete, aliases)
 - Monitoring suite (optional), with "landing page" summary dashboard as well as detailed dashboards for SMTP server, IMAP server, Fail2Ban, and DNS sanity
 
-<img src="dashboard.png">
-
-# TL;DR
+# Quickstart instructions
 
 For detailed set-up and operations instructions please consult the [wiki](https://github.com/t-lo/mailserver/wiki)
 
