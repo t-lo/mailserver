@@ -24,8 +24,8 @@ chown -R 65534:root $(pwd)/_server_workspace_/prometheus-data \
                     $(pwd)/_server_workspace_/prometheus-pushgateway
 
 #  Grafana user id 472
-mkdir -p _server_workspace_/var/log/grafana/
-chown -R 472:root _server_workspace_/var/log/grafana/
+mkdir -p _server_workspace_/var/log/grafana/ _server_workspace_/var/lib/grafana/
+chown -R 472:root _server_workspace_/var/log/grafana/ _server_workspace_/var/lib/grafana/
 
 # Start prometheus and pushgateway containers in the background
 docker run --rm --network mailserver-monitoring-internal \
@@ -50,6 +50,7 @@ docker run --rm -i --network mailserver-monitoring-internal \
             -v $(pwd)/grafana/dashboards:/etc/grafana/provisioning/dashboards \
             -v $(pwd)/grafana/datasources:/etc/grafana/provisioning/datasources \
             -v $(pwd)/_server_workspace_/var/log/grafana:/var/log/grafana \
+            -v $(pwd)/_server_workspace_/var/lib/grafana:/var/lib/grafana \
             --name mailserver-monitoring-grafana \
             grafana/grafana:latest 2>&1 | sed 's/^/GRAFANA: /'
 
