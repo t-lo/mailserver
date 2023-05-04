@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -356,7 +356,7 @@
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 4,
         "x": 12,
         "y": 2
@@ -486,7 +486,7 @@
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 8,
         "x": 16,
         "y": 2
@@ -863,30 +863,6 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "gridPos": {
-        "h": 2,
-        "w": 8,
-        "x": 4,
-        "y": 10
-      },
-      "id": 35,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/f2bn/\">Fail2Ban</a></h3>",
-        "mode": "html"
-      },
-      "pluginVersion": "9.5.1",
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -931,10 +907,10 @@
         ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 4,
         "x": 12,
-        "y": 10
+        "y": 7
       },
       "id": 19,
       "options": {
@@ -1061,10 +1037,10 @@
         ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 8,
         "x": 16,
-        "y": 10
+        "y": 7
       },
       "id": 21,
       "options": {
@@ -1101,6 +1077,165 @@
       ],
       "title": "Failed Authentications (1s rate, 30s avg)",
       "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 4,
+        "y": 10
+      },
+      "id": 35,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/f2bn/\">Fail2Ban</a></h3>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.5.1",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sieve action duration"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 38,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "dovecot_sieve_action_count",
+          "legendFormat": "Sieve actions",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "dovecot_sieve_error_count",
+          "hide": false,
+          "legendFormat": "Sieve errors",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "dovecot_sieve_action_duration_seconds_sum",
+          "hide": false,
+          "legendFormat": "Sieve action duration",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "Sieve",
       "type": "timeseries"
     },
     {
@@ -1888,6 +2023,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "main",
-  "version": 3,
+  "version": 2,
   "weekStart": ""
 }

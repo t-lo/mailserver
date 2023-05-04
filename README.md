@@ -7,6 +7,7 @@ Dockerised mailserver, inspired by https://jan.wildeboer.net/2022/08/Email-1-Pos
 - A DNS domain for sending / receiving mails. Multiple domains are supported.
 
 **Features**
+- SMTP[s] and IMAP[s] servers, with managesieve for server-side IMAP filtering
 - Fully automated set-up based on very few settings, including
   - certificates generation and renewal (on container restart)
   - SPF, DKIM, and DMARC integration
@@ -38,7 +39,7 @@ Go to your DNS service provider and create a DNS entry for `HOSTNAME` pointing t
 
 **Start server**
 
-The server needs ports 80 for http, 25 and 465 for SMTP(s), and 143 and 993 for IMAP.
+The server needs ports 80 for http, 25 and 465 for SMTP(s), 143 and 993 for IMAP, and 4190 for managesieve.
 Monitoring needs port 443 for HTTPS.
 
 1. `./start_mailserver.sh` <br/>
@@ -55,6 +56,7 @@ This can take a few minutes.
 Also, a default postmaster account `ADMIN_USER@DOMAIN` will be created.
 This account will receive letsencrypt certificate renewal notifications as well as abuse reports from other mailserver operators.
 Check the account's inbox regularly.
+If you use monitoring you can check the amount of unread admin mails on the home dashboard.
 The account's SMTP / IMAP password is `ADMIN_USER_INITIAL_PASSWORD` and can be changed later (see user management below).
 
 **Set up DNS for your domain**

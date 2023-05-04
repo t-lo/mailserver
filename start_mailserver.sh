@@ -11,6 +11,7 @@ exec docker run --rm -i -p $http:80 -p $https:443 \
                          --dns  85.215.235.63  \
                          -p 25:25 -p 465:465 \
                          -p 143:143 -p 993:993 \
+                         -p 4190:4190 \
                          -v $(pwd)/_server_workspace_:/host --env-file settings.env \
 			 --cap-add CAP_AUDIT_READ \
 			 --cap-add CAP_DAC_READ_SEARCH \
