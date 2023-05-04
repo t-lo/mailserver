@@ -33,9 +33,10 @@ For detailed set-up and operations instructions please consult the [wiki](https:
    All other settings are set to sane defaults.
    Basic help is provided for all settings; review and update as you see fit.
 
-**Create A DNS entry for your mail server**
+**Create DNS record for your mail server**
 
-Go to your DNS service provider and create a DNS entry for `HOSTNAME` pointing to your server's IP.
+Go to your DNS service provider and create a Host DNS record ("A record") for `HOSTNAME` pointing to your server's IP.
+This must be done prior to the mailserver's first run to successfully request letsencrypt certificates for `HOSTNAME`.
 
 **Start server**
 
