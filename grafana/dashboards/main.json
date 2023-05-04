@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -161,7 +161,7 @@
               },
               {
                 "color": "red",
-                "value": 10000000
+                "value": 10000000000
               }
             ]
           },
@@ -772,7 +772,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 19,
         "w": 4,
         "x": 0,
         "y": 7
@@ -1205,7 +1205,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "dovecot_sieve_action_count",
+          "expr": "rate(dovecot_sieve_action_count[30s])*30",
           "legendFormat": "Sieve actions",
           "range": true,
           "refId": "A"
@@ -1216,7 +1216,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "dovecot_sieve_error_count",
+          "expr": "rate(dovecot_sieve_error_count[30s])*30",
           "hide": false,
           "legendFormat": "Sieve errors",
           "range": true,
@@ -1228,7 +1228,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "dovecot_sieve_action_duration_seconds_sum",
+          "expr": "rate(dovecot_sieve_action_duration_seconds_sum[30s])*30",
           "hide": false,
           "legendFormat": "Sieve action duration",
           "range": true,
@@ -1351,8 +1351,8 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 24,
-        "x": 0,
+        "w": 20,
+        "x": 4,
         "y": 17
       },
       "id": 17,
@@ -1429,8 +1429,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 7,
-        "x": 0,
+        "w": 6,
+        "x": 4,
         "y": 19
       },
       "id": 26,
@@ -1550,8 +1550,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 10,
-        "x": 7,
+        "w": 7,
+        "x": 10,
         "y": 19
       },
       "id": 24,
@@ -1628,7 +1628,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 80,
+            "fillOpacity": 7,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1642,7 +1642,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "normal"
@@ -1680,8 +1680,7 @@
       "options": {
         "legend": {
           "calcs": [
-            "mean",
-            "lastNotNull"
+            "max"
           ],
           "displayMode": "table",
           "placement": "right",
@@ -2023,6 +2022,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "main",
-  "version": 2,
+  "version": 5,
   "weekStart": ""
 }
