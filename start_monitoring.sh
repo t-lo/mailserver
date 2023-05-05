@@ -35,7 +35,7 @@ docker run --rm --network mailserver-monitoring-internal \
            prom/prometheus:latest \
                 --config.file=/prometheus.yaml \
                 --storage.tsdb.path=/prometheus-data \
-                --storage.tsdb.retention.time=6m \
+                --storage.tsdb.retention.time=200d \
                 --web.enable-lifecycle 2>&1 | sed 's/^/PROMETHEUS: /' &
 
 docker run --rm --network mailserver-monitoring-internal \
