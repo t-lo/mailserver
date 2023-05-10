@@ -1,0 +1,13 @@
+# mailman integration - add this directly above
+# the "virtual_" maps
+transport_maps = regex:/host/mailman/core/var/data/postfix_lmtp
+relay_domains =  regex:/host/mailman/core/var/data/postfix_domains
+mynetworks_style = subnet
+
+# Leave these as-is in main.cf (i.e. don't comment out)
+   ## gid/uid 2001 is "mailuser" created in Dockerfile
+   #virtual_uid_maps = static:2001
+   #virtual_gid_maps = static:2001
+# Update virtual alias maps to include the mailman virtual aliases file
+virtual_alias_maps = lmdb:/etc/postfix/valias regex:/host/mailman/core/var/data/postfix_vmap
+

@@ -3,26 +3,33 @@
 #
 
 :80 {
-	root * /host/srv/www/html
-	file_server
-	log {
-		output file /host/var/log/caddy.log
-	}
+        root * /host/srv/www/html
+        file_server
+        log {
+                output file /host/var/log/caddy.log
+        }
 }
 
 :443 {
-	tls /etc/letsencrypt/live/${HOSTNAME}/fullchain.pem /etc/letsencrypt/live/${HOSTNAME}/privkey.pem
-	file_server
-	log {
-		output file /host/var/log/caddy.log
-	}
+        tls /etc/letsencrypt/live/${HOSTNAME}/fullchain.pem /etc/letsencrypt/live/${HOSTNAME}/privkey.pem
+
+        log {
+                output file /host/var/log/caddy.log
+        }
 
         handle /monitoring/* {
                 uri strip_prefix /monitoring
+                request_header -authorization
                 reverse_proxy mailserver-monitoring-grafana:3000 {
                         header_up Host {host}
                         header_up X-Forwarded-Proto https
                         header_up X-Real-IP {remote_host}
                 }
         }
+
+        #
+        # Imports section
+        #
+        # Put imports of other snippets for this server here; e.g.
+        # import /etc/caddy/Caddyfile.mailman.inc
 }

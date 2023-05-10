@@ -1,0 +1,14 @@
+[Unit]
+Description=Mailserver docker container
+Requires=mailserver.service
+After=mailserver.service
+
+[Service]
+Restart=always
+WorkingDirectory=/opt/mailserver
+ExecStart=/opt/mailserver/start_mailman.sh
+ExecStop=docker-compose -f mailman.yaml down
+
+[Install]
+WantedBy=network.service
+WantedBy=multi-user.target

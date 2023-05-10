@@ -1,5 +1,5 @@
 [Unit]
-Description=Mailserver docker container
+Description=Mailserver monitoring docker containers
 Requires=mailserver.service
 After=mailserver.service
 

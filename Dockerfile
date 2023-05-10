@@ -42,7 +42,7 @@ FROM alpine
 COPY --from=builder /postfix_exporter /fail2ban-prometheus-exporter /prips /
 RUN apk update \
     && apk upgrade \
-    && apk add postfix certbot opendkim opendkim-utils opendmarc caddy \
+    && apk add postfix postfix-pcre certbot opendkim opendkim-utils opendmarc caddy \
                ca-certificates-bundle dovecot dovecot-pigeonhole-plugin \
                dovecot-lmtpd gettext openssl fail2ban pwgen bind-tools curl jq
 
