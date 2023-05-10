@@ -12,7 +12,7 @@ done
 
 # Create internal network and connect to mailserver container
 docker network rm mailserver-monitoring-internal >/dev/null 2>&1 || true
-docker network create --internal --subnet 10.0.0.0/24 mailserver-monitoring-internal
+docker network create --internal mailserver-monitoring-internal
 docker network connect mailserver-monitoring-internal mailserver
 
 trap 'docker network disconnect mailserver-monitoring-internal mailserver; docker network rm mailserver-monitoring-internal' EXIT
