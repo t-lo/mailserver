@@ -67,7 +67,7 @@ function init_dovecot() {
 
     if ! grep -qE "^${ADMIN_EMAIL}:" /etc/dovecot/passwd ; then
         echo "##### ENTRY: Creating postmaster / admin account '${ADMIN_EMAIL}'"
-	/add_user.sh "${ADMIN_EMAIL}" "${ADMIN_USER_INITIAL_PASSWORD}"
+        /add_user.sh "${ADMIN_EMAIL}" "${ADMIN_USER_INITIAL_PASSWORD}"
     fi
 
     envsubst '$HOSTNAME' < /etc/dovecot/conf.d/10-ssl.conf.tmpl > /etc/dovecot/conf.d/10-ssl.conf
@@ -128,7 +128,8 @@ function init_opendmarc() {
 echo "#################################  Startup $(date -Iseconds) #####################################"
 mkdir -p /host/var/log /host/srv/www/html /host/etc
 
-syslogd -O /host/var/log/syslog.log
+# 10MB max log size, 1 rotation file (syslog.log.0, default)
+syslogd -s $((10*1024)) -O /host/var/log/syslog.log
 
 echo "##### ENTRY: Processing fail2ban."
 init_fail2ban
@@ -172,8 +173,17 @@ echo
 
 sleep 2
 
-# Caddy log is too noisy to tail
-tail -f /host/var/log/syslog.log \
-       	/host/var/log/custom_stats.log \
-	/host/var/log/fail2ban-prometheus-exporter.log  \
-	/host/var/log/postfix_exporter.log
+
+# Tail all logs (except caddy, too noisy) and handle syslog log rotation
+(
+    tail -f /host/var/log/[!caddy]*.log &
+
+    while true; do
+            inotifywait -e delete -e create -e delete_self -e move_self /host/var/log/syslog.log
+            echo "############## Syslog log rotated; restarting tail ##############"
+            kill %1
+            wait
+            touch /host/var/log/syslog.log
+            tail -f /host/var/log/[!caddy]*.log &
+    done
+)
