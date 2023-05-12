@@ -19,6 +19,8 @@ Dockerised mailserver, inspired by https://jan.wildeboer.net/2022/08/Email-1-Pos
 
 For detailed set-up and operations instructions please consult the [wiki](https://github.com/t-lo/mailserver/wiki)
 
+First, clone the [repository](https://github.com/t-lo/) or download a [release tarball](https://github.com/t-lo/mailserver/releases).
+
 **Set up server**
 
 1. `cp settings.env.empty settings.env`; edit `settings.env` and fill in:

@@ -5,6 +5,11 @@ cd "$(dirname "$0")"
 http="${1:-80}"
 https="${2:-443}"
 
+version=""
+if [ -f "VERSION" ] ; then
+    version=":$(cat VERSION)"
+fi
+
 # Create mailserver named network for other container services to connect to.
 # This is mostly useful for other container services that use LMTP, e.g. mailman3.
 docker network rm mailserver-network >/dev/null 2>&1 || true
@@ -24,4 +29,4 @@ docker run --rm -i -p $http:80 -p $https:443 \
                --cap-add CAP_NET_ADMIN \
                --cap-add CAP_NET_RAW \
                --name mailserver \
-                      ghcr.io/t-lo/mailserver
+                      "ghcr.io/t-lo/mailserver${version}"

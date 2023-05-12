@@ -2,3 +2,5 @@ settings.env
 _server_workspace_
 mailman.yaml
 start_mailman.sh
+mailserver*.tgz
+VERSION
