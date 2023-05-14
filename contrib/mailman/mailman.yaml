@@ -48,9 +48,10 @@ services:
     - SMTP_HOST_USER=      # TODO: Add a mailman user (e.g. "mailman@DOMAIN") to the mailserver using "user add ..." and paste the username here
     - SMTP_HOST_PASSWORD=  # TODO: mailman user's password goes here.
     - MTA=postfix
-    ports:
-    - "127.0.0.1:20001:8001" # API
-    - "127.0.0.1:8024:8024" # LMTP - incoming emails
+    # No exports needed as we're using the mailserver docker network
+    # ports:
+    # - "127.0.0.1:20001:8001" # API
+    # - "127.0.0.1:8024:8024" # LMTP - incoming emails
     networks:
       mailserver-network:
 
@@ -77,9 +78,10 @@ services:
     - SMTP_PORT=25
     - SMTP_HOST_USER=       # TODO: Mailman user from above
     - SMTP_HOST_PASSWORD=   # TODO: mailman user's password from above
-    ports:
-    - "127.0.0.1:20000:8000" # HTTP
-    - "127.0.0.1:20080:8080" # uwsgi
+    # No exports needed as we're using the mailserver docker network
+    # ports:
+    # - "127.0.0.1:20001:8001" # API
+    # - "127.0.0.1:8024:8024" # LMTP - incoming emails
     networks:
       mailserver-network:
 
