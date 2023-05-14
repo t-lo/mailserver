@@ -77,12 +77,12 @@ function init_dovecot() {
 # --
 
 function start_custom_metrics() {
-    setsid -c /postfix_exporter --postfix.logfile_path /host/var/log/syslog.log \
-                1>/host/var/log/postfix_exporter.log 2>&1 &
-    setsid -c /fail2ban-prometheus-exporter \
-                1>/host/var/log/fail2ban-prometheus-exporter.log 2>&1 &
-    setsid -c /custom_stats.sh \
-                1>/host/var/log/custom_stats.log 2>&1 &
+    setsid /postfix_exporter --postfix.logfile_path /host/var/log/syslog.log \
+                >>/host/var/log/postfix_exporter.log 2>&1 &
+    setsid /fail2ban-prometheus-exporter \
+                >>/host/var/log/fail2ban-prometheus-exporter.log 2>&1 &
+    setsid /custom_stats.sh \
+                >>/host/var/log/custom_stats.log 2>&1 &
     envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
     caddy stop
     caddy start --config /host/etc/caddy/Caddyfile.https
