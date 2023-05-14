@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 3,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -982,6 +982,6 @@
   "timezone": "",
   "title": "dovecot",
   "uid": "dvct",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

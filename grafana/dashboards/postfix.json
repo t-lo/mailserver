@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 10013,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2285,6 +2285,6 @@
   "timezone": "",
   "title": "Postfix Metrics",
   "uid": "psfx",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

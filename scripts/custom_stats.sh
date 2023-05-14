@@ -27,16 +27,89 @@ function emit_postmaster_unread_emails() {
 }
 # --
 
+function emit_memory_usage() {
+
+    free | awk '
+        /^Mem:/{
+            print "#TYPE system_memory_total gauge";
+            print "system_memory_total " $2;
+            print "#TYPE system_memory_used gauge";
+            print "system_memory_used " $3;
+            print "#TYPE system_memory_free gauge";
+            print "system_memory_free " $4;
+            print "#TYPE system_memory_shared gauge";
+            print "system_memory_shared " $5;
+            print "#TYPE system_memory_buffers_cached gauge";
+            print "system_memory_buffers_cached " $6;
+            print "#TYPE system_memory_available gauge";
+            print "system_memory_available " $7; }
+        /^Swap:/{
+            print "#TYPE system_swap_total gauge";
+            print "system_swap_total " $2;
+            print "#TYPE system_swap_used gauge";
+            print "system_swap_used " $3;
+            print "#TYPE system_swap_free gauge";
+            print "system_swap_free " $4; }'
+}
+# --
+
+function emit_storage_usage() {
+
+    df | awk '
+        / \/host$/{
+            print "#TYPE system_storage_total gauge";
+            print "system_storage_total " $2;
+            print "#TYPE system_storage_used gauge";
+            print "system_storage_used " $3;
+            print "#TYPE system_storage_available gauge";
+            print "system_storage_available " $4; }'
+}
+# --
+
+function emit_cpu_procs_stats() {
+
+    cat /proc/loadavg | awk '
+        {
+            print "#TYPE system_loadavg_1m gauge\nsystem_loadavg_1m " $1;
+            print "#TYPE system_loadavg_5m gauge\nsystem_loadavg_5m " $2;
+            print "#TYPE system_loadavg_15m gauge\nsystem_loadavg_15m " $3;
+            split($4,procs,"/");
+            print "#TYPE system_running_procs gauge\nsystem_running_procs " procs[1];
+            print "#TYPE system_num_procs gauge\nsystem_num_procs " procs[2]; }'
+    echo "#TYPE system_num_cores gauge"
+    echo -n "system_num_cores "
+    grep -cE '^processor[[:space:]]*:' /proc/cpuinfo
+}
+# --
 
 echo "Starting custom stats exporter."
+
+mkdir -p "/host/var/run"
+dns_statefile="/host/var/run/dns_prometheus_state.txt"
+rm -f "${dns_statefile}"
+touch "${dns_statefile}"
 
 while true; do
 
     t1="$(date +%s)"
 
+    emit_cpu_procs_stats | ${curl_pgw}
     emit_mailbox_sizes | ${curl_pgw}
     emit_postmaster_unread_emails | ${curl_pgw}
-    /dns_sanity.sh prometheus | ${curl_pgw}
+    emit_memory_usage | ${curl_pgw}
+    emit_storage_usage | ${curl_pgw}
+
+    # DNS settings are less dynamic than the above stats, so we only
+    # push if something changed.
+    /dns_sanity.sh prometheus > "${dns_statefile}.new"
+
+    orig="$(sha1sum "${dns_statefile}" | awk '{print $1}')"
+    new="$(sha1sum "${dns_statefile}.new" | awk '{print $1}')"
+    if [ "${orig}" != "${new}" ] ; then
+        echo "Custom metrics: DNS information changed; pushing update"
+        mv "${dns_statefile}.new" "${dns_statefile}"
+        cat "${dns_statefile}" | ${curl_pgw}
+    fi
 
     t2="$(date +%s)"
 

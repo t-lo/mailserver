@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -397,6 +397,6 @@
   "timezone": "",
   "title": "Fail2ban",
   "uid": "f2bn",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
