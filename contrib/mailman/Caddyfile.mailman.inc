@@ -24,11 +24,16 @@
                 }
         }
 
+	# exclude Grafana from mailman's basic auth since it ships its own auth
+	@auth {
+		not path /monitoring*
+	}
+
         # Mild protection via Basic authentication. Make up a user name (or go with 'mailman')
         #  and generate a password hash via 
         # docker run --rm --entrypoint /usr/sbin/caddy ghcr.io/t-lo/mailserver hash-password --plaintext <PASSWORD>
-        basicauth {
-                mailman <PASSWORD_HASH>
+        basicauth @auth {
+                mailman JDJhJDE0JEpCcllzOC9RNTNraURhQTlIV25DTC5LMko5VzJaWFZJV0xYNnJncklIUkhHRXhBNHpZZVRt
         }
 
         handle /static/* {
