@@ -1,6 +1,8 @@
-#!/bin/ash
+#!/bin/bash
 
 set -euo pipefail
+
+shopt -s extglob
 
 echo
 echo "##### Mail server system up and running on ${HOSTNAME}."

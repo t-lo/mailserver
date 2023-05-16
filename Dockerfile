@@ -45,7 +45,7 @@ RUN apk update \
     && apk add postfix postfix-pcre certbot opendkim opendkim-utils opendmarc caddy \
                ca-certificates-bundle dovecot dovecot-pigeonhole-plugin \
                dovecot-lmtpd gettext openssl fail2ban pwgen bind-tools \
-               curl jq inotify-tools supervisor
+               curl jq inotify-tools supervisor bash
 
 COPY caddy/ /etc/caddy/
 COPY fail2ban/ /etc/fail2ban/
