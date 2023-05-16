@@ -51,7 +51,7 @@ docker build -t "${container}:${version}" .
 docker tag "${container}:latest" "${container}:${version}"
 
 yell "Creating the release tarball"
-echo "${release_name}" >VERSION
+echo "${version}" >VERSION
 tar czvf "${release_name}.tgz" -T release-files.txt
 
 yell "Creating the release tag"
