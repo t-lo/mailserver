@@ -76,16 +76,18 @@ function init_dovecot() {
 }
 # --
 
-function start_custom_metrics() {
-    setsid /postfix_exporter --postfix.logfile_path /host/var/log/syslog.log \
-                >>/host/var/log/postfix_exporter.log 2>&1 &
-    setsid /fail2ban-prometheus-exporter \
-                >>/host/var/log/fail2ban-prometheus-exporter.log 2>&1 &
-    setsid /custom_stats.sh \
-                >>/host/var/log/custom_stats.log 2>&1 &
-    envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
-    caddy stop
-    caddy start --config /host/etc/caddy/Caddyfile.https
+function init_custom_metrics() {
+    if test "${METRICS:-}" = "true" ; then
+        echo "   ## ENTRY: Metrics / Monitoring services requested; initialising."
+        cp /host/etc/supervisor/conf.d.available/supervisor-monitoring.conf \
+           /host/etc/supervisor/conf.d.active
+
+        envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
+        caddy stop
+        caddy start --config /host/etc/caddy/Caddyfile.https
+    else
+        rm -f /host/etc/supervisor/conf.d.active/supervisor-monitoring.conf
+    fi
 }
 # --
 
@@ -128,8 +130,8 @@ function init_opendmarc() {
 echo "#################################  Startup $(date -Iseconds) #####################################"
 mkdir -p /host/var/log /host/srv/www/html /host/etc
 
-# 10MB max log size, 1 rotation file (syslog.log.0, default)
-syslogd -s $((10*1024)) -O /host/var/log/syslog.log
+echo "##### ENTRY: Processing supervisord."
+init_srv_cfg supervisor
 
 echo "##### ENTRY: Processing fail2ban."
 init_fail2ban
@@ -154,36 +156,8 @@ init_postfix
 echo "##### ENTRY: Processing dovecot."
 init_dovecot
 
+init_custom_metrics
+
 echo "##### ENTRY: Starting services"
-postfix start
-dovecot
-opendkim -A
-opendmarc -A -c /etc/opendmarc/opendmarc.conf
-fail2ban-server
 
-if test "${METRICS:-}" = "true" ; then
-    echo "   ## ENTRY: Metrics / Monitoring services requested"
-    echo "             Starting postfix_exporter/custom stats and restarting Caddy on HTTPS"
-    start_custom_metrics
-fi
-
-echo
-echo "##### Mail server system up and running on ${HOSTNAME}."
-echo
-
-sleep 2
-
-
-# Tail all logs (except caddy, too noisy) and handle syslog log rotation
-(
-    tail -f /host/var/log/[!caddy]*.log &
-
-    while true; do
-            inotifywait -e delete -e create -e delete_self -e move_self /host/var/log/syslog.log
-            echo "############## Syslog log rotated; restarting tail ##############"
-            kill %1
-            wait
-            touch /host/var/log/syslog.log
-            tail -f /host/var/log/[!caddy]*.log &
-    done
-)
+supervisord --nodaemon --configuration /host/etc/supervisor/supervisor.conf

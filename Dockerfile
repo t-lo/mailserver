@@ -45,7 +45,7 @@ RUN apk update \
     && apk add postfix postfix-pcre certbot opendkim opendkim-utils opendmarc caddy \
                ca-certificates-bundle dovecot dovecot-pigeonhole-plugin \
                dovecot-lmtpd gettext openssl fail2ban pwgen bind-tools \
-               curl jq inotify-tools
+               curl jq inotify-tools supervisor
 
 COPY caddy/ /etc/caddy/
 COPY fail2ban/ /etc/fail2ban/
@@ -53,6 +53,7 @@ COPY dovecot/ /etc/dovecot/
 COPY opendkim/ /etc/opendkim/
 COPY opendmarc/ /etc/opendmarc/
 COPY postfix/ /etc/postfix/
+COPY supervisor/ /etc/supervisor/
 RUN touch /etc/postfix/vuser /etc/postfix/valias
 
 RUN addgroup -g 2001 mailuser \
