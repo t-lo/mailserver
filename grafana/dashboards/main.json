@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -90,9 +90,9 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "system_memory_total - (system_memory_free + system_memory_buffers_cached)",
-          "instant": false,
+          "instant": true,
           "legendFormat": "Used",
-          "range": true,
+          "range": false,
           "refId": "A"
         },
         {
@@ -104,9 +104,9 @@
           "exemplar": false,
           "expr": "system_memory_total",
           "hide": false,
-          "instant": false,
+          "instant": true,
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "B"
         }
       ],
@@ -195,9 +195,11 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "system_storage_used",
+          "instant": true,
           "legendFormat": "used",
-          "range": true,
+          "range": false,
           "refId": "A"
         },
         {
@@ -206,10 +208,12 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "system_storage_total",
           "hide": false,
+          "instant": true,
           "legendFormat": "total",
-          "range": true,
+          "range": false,
           "refId": "B"
         }
       ],
@@ -294,9 +298,11 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "system_loadavg_1m",
+          "instant": true,
           "legendFormat": "1m load",
-          "range": true,
+          "range": false,
           "refId": "A"
         },
         {
@@ -305,10 +311,12 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "system_num_cores",
           "hide": false,
+          "instant": true,
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "B"
         }
       ],
@@ -2861,6 +2869,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "main",
-  "version": 13,
+  "version": 4,
   "weekStart": ""
 }
