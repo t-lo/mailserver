@@ -31,13 +31,13 @@ jobs:
           VERSION_TAG: ${{ inputs.version_tag }}
         run: |
           cd mailserver
-          git checkout "$VERSION_TAG"
+          git checkout "mailserver-$VERSION_TAG"
 
       - name: Grok image tag
         run: |
           cd mailserver
           git describe --tags | tee SRC_TAG
-          echo "ghcr.io/t-lo/mailserver:$(cat SRC_TAG)-models" | tee IMAGE_TAG
+          echo "ghcr.io/t-lo/mailserver:$(cat SRC_TAG)" | tee IMAGE_TAG
 
       - name: Build the docker image
         run: |
