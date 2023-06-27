@@ -42,7 +42,7 @@ untracked="$(git ls-files --other --exclude-standard --directory 2>&1)"
 if [ -n "${untracked}" ] ; then
     echo
     git ls-files --other --exclude-standard --directory 2>&1
-    yell "ERROR: untracked files detected (see baove). Please commit and push or remove bevore creating a release."
+    yell "ERROR: untracked files detected (see above). Please commit and push or remove before creating a release."
     exit 1
 fi
 

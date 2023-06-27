@@ -1,7 +1,7 @@
 # First, build the metrics exporter and the "prips" (print ip ranges) tool.
 FROM alpine AS builder
 ARG postfix_exporter_version=0.3.0
-ARG fail2ban_exporter_version=0.7.2
+ARG fail2ban_exporter_version=0.9.0
 ARG prips_version=1.2.0
 
 RUN apk update \
@@ -18,10 +18,10 @@ RUN cd "/postfix_exporter-$postfix_exporter_version" \
     && mv postfix_exporter /
 
 RUN echo "Downloading and building fail2ban exporter version '$fail2ban_exporter_version'" \
-    && wget "https://gitlab.com/hectorjsmith/fail2ban-prometheus-exporter/-/archive/${fail2ban_exporter_version}/fail2ban-prometheus-exporter-${fail2ban_exporter_version}.tar.gz" \
-    && tar -xzvf "fail2ban-prometheus-exporter-${fail2ban_exporter_version}.tar.gz"
+    && wget "https://gitlab.com/hectorjsmith/fail2ban-prometheus-exporter/-/archive/v${fail2ban_exporter_version}/fail2ban-prometheus-exporter-v${fail2ban_exporter_version}.tar.gz" \
+    && tar -xzvf "fail2ban-prometheus-exporter-v${fail2ban_exporter_version}.tar.gz"
 
-RUN cd "/fail2ban-prometheus-exporter-${fail2ban_exporter_version}/src" \
+RUN cd "/fail2ban-prometheus-exporter-v${fail2ban_exporter_version}" \
     && go mod download \
     && go build \
     && strip fail2ban-prometheus-exporter \
