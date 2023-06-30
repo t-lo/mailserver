@@ -29,6 +29,7 @@ chown -R 472:root _server_workspace_/var/log/grafana/ _server_workspace_/var/lib
 
 # Start prometheus and pushgateway containers in the background
 docker run --rm --network mailserver-monitoring-internal \
+           --pull always \
            -v $(pwd)/prometheus/prometheus.yaml:/prometheus.yaml \
            -v $(pwd)/_server_workspace_/prometheus-data:/prometheus-data \
            --name mailserver-prometheus \
@@ -39,12 +40,14 @@ docker run --rm --network mailserver-monitoring-internal \
                 --web.enable-lifecycle 2>&1 | sed 's/^/PROMETHEUS: /' &
 
 docker run --rm --network mailserver-monitoring-internal \
+           --pull always \
            -v $(pwd)/_server_workspace_/prometheus-pushgateway/:/persist \
            --name mailserver-prometheus-pushgateway \
            prom/pushgateway:latest \
                 --persistence.file=/persist/data.dat 2>&1 | sed 's/^/PUSHGW: /' &
 
 docker run --rm -i --network mailserver-monitoring-internal \
+           --pull always \
             --env-file settings.env \
 	    --env GF_LOG_MODE="console file" \
             -v $(pwd)/grafana/dashboards:/etc/grafana/provisioning/dashboards \
