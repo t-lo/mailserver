@@ -80,7 +80,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -187,7 +187,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -290,7 +290,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -362,7 +362,7 @@
         "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/dvct/\">Dovecot IMAP server</a></h3>",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "type": "text"
     },
     {
@@ -414,7 +414,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -479,7 +479,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -568,7 +568,7 @@
           }
         ]
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -705,9 +705,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "rate(dovecot_auth_success_total[30s])*30",
+          "expr": "rate(dovecot_auth_success_count[30s])*30",
           "instant": false,
-          "legendFormat": "{{user}}",
+          "legendFormat": "Avg. success per second",
           "range": true,
           "refId": "A"
         }
@@ -784,7 +784,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -1004,7 +1004,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "dark-red",
+            "mode": "fixed"
           },
           "custom": {
             "axisCenteredZero": false,
@@ -1051,22 +1052,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-reds"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 5,
@@ -1100,9 +1086,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "rate(dovecot_auth_failures_total[30s])*30",
+          "expr": "rate(dovecot_auth_failures_count[30s])*30",
           "instant": false,
-          "legendFormat": "{{user}}",
+          "legendFormat": "Avg. fails per second",
           "range": true,
           "refId": "A"
         }
@@ -1175,7 +1161,7 @@
         "showHeader": false,
         "sortBy": []
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -1281,7 +1267,7 @@
           }
         ]
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "targets": [
         {
           "datasource": {
@@ -1679,7 +1665,7 @@
         "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/f2bn/\">Fail2Ban</a></h3>",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "type": "text"
     },
     {
@@ -1954,7 +1940,7 @@
         "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/psfx/\">Postfix SMTP server</a></h3>",
         "mode": "html"
       },
-      "pluginVersion": "9.5.1",
+      "pluginVersion": "10.0.1",
       "type": "text"
     },
     {
@@ -2343,8 +2329,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2441,8 +2426,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2540,8 +2524,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2649,8 +2632,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2753,8 +2735,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2869,6 +2850,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "main",
-  "version": 4,
+  "version": 8,
   "weekStart": ""
 }

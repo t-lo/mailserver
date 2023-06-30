@@ -2285,6 +2285,6 @@
   "timezone": "",
   "title": "Postfix Metrics",
   "uid": "psfx",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }

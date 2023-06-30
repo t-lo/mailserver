@@ -397,6 +397,6 @@
   "timezone": "",
   "title": "Fail2ban",
   "uid": "f2bn",
-  "version": 1,
+  "version": 4,
   "weekStart": ""
 }
