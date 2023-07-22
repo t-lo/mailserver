@@ -39,12 +39,13 @@ function check_letsencrypt() {
         certbot certonly --non-interactive --webroot --webroot-path /host/srv/www/html \
              --agree-tos --email "${ADMIN_EMAIL}" \
             -d "${HOSTNAME}"
-    else
-        echo "##### ENTRY: checking for certificate renewals"
-        certbot renew --non-interactive --webroot --webroot-path /host/srv/www/html
     fi
 
     init_srv_cfg letsencrypt
+
+    echo "##### ENTRY: checking for certificate renewals"
+    certbot renew --non-interactive --no-random-sleep-on-renew \
+        --webroot --webroot-path /host/srv/www/html
 }
 # --
 
