@@ -47,8 +47,8 @@ if [ -n "${untracked}" ] ; then
 fi
 
 yell "Building the container image"
-docker build -t "${container}:${version}" .
-docker tag "${container}:latest" "${container}:${version}"
+docker build --pull -t "${container}:${version}" .
+docker tag "${container}:${version}" "${container}:latest"
 
 yell "Creating the release tarball"
 echo "${version}" >VERSION

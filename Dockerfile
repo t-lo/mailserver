@@ -1,5 +1,5 @@
 # First, build the metrics exporter and the "prips" (print ip ranges) tool.
-FROM alpine AS builder
+FROM alpine:latest AS builder
 ARG postfix_exporter_version=0.3.0
 ARG fail2ban_exporter_version=0.9.0
 ARG prips_version=1.2.0
@@ -37,7 +37,7 @@ RUN cd "/prips-$prips_version" \
     && mv prips /
 
 
-FROM alpine
+FROM alpine:latest
 
 COPY --from=builder /postfix_exporter /fail2ban-prometheus-exporter /prips /
 RUN apk update \
