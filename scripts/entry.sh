@@ -161,4 +161,4 @@ init_custom_metrics
 
 echo "##### ENTRY: Starting services"
 
-supervisord --nodaemon --configuration /host/etc/supervisor/supervisor.conf
+exec supervisord --nodaemon --configuration /host/etc/supervisor/supervisor.conf

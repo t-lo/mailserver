@@ -1,0 +1,14 @@
+[Unit]
+Description=Mailserver monitoring grafana service
+Requires=mailserver-monitoring-network.service
+After=mailserver-monitoring-network.service
+PartOf=mailserver-monitoring.service
+
+[Service]
+Restart=always
+WorkingDirectory=/opt/mailserver
+ExecStart=/opt/mailserver/systemd/start_monitoring_grafana.sh
+ExecStop=/usr/bin/docker stop mailserver-monitoring-grafana
+
+[Install]
+WantedBy=mailserver-monitoring.service

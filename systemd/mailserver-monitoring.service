@@ -1,15 +1,13 @@
 [Unit]
-Description=Mailserver monitoring docker containers
+Description=Mailserver monitoring umbrella service
 Requires=mailserver.service
 After=mailserver.service
 
 [Service]
-Restart=always
+Type=oneshot
 WorkingDirectory=/opt/mailserver
-ExecStart=/opt/mailserver/start_monitoring.sh
-ExecStop=docker stop -t 2 mailserver-monitoring-grafana mailserver-prometheus mailserver-prometheus-pushgateway
-
+ExecStart=/opt/mailserver/systemd/wait_for_container.sh "mailserver"
+RemainAfterExit=yes
 
 [Install]
-WantedBy=network.service
 WantedBy=multi-user.target

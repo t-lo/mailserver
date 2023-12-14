@@ -45,11 +45,11 @@ This must be done prior to the mailserver's first run to successfully request le
 The server needs ports 80 for http, 25 and 465 for SMTP(s), 143 and 993 for IMAP, and 4190 for managesieve.
 Monitoring needs port 443 for HTTPS.
 
-1. `./start_mailserver.sh` <br/>
+1. `./systemd/start_mailserver.sh` <br/>
    If you left `METRICS=true`, also run `start_monitoring.sh`. <br/>
    Monitoring dashboards can be accessed at `https://<HOSTNAME>/monitoring/`.
    
-If ports 80 and 443 are already in use, alternative ports for HTTP and HTTPS can be provided on the command line: `./start_mailserver.sh <HTTP-PORT> <HTTPS-PORT>`
+If ports 80 and 443 are already in use, alternative ports for HTTP and HTTPS can be provided on the command line: `./systemd/start_mailserver.sh <HTTP-PORT> <HTTPS-PORT>`
 Make sure to configure proxy forwarding on your host so HTTP requests for `HOSTNAME` are forwarded to the mailserver container's custom HTTP port.
 See https://github.com/t-lo/mailserver/wiki/Use-custom-ports-for-HTTP---HTTPS for more information.
 
@@ -83,12 +83,12 @@ The account's SMTP / IMAP password is `ADMIN_USER_INITIAL_PASSWORD` and can be c
 **Automatically start at boot**
 
 1. Stop the mailserver and (if applicable) the monitoring service.
-2. `cp systemd/ /etc/systemd/system/`
+2. `cp systemd/*.service /etc/systemd/system/`
 3. `systemd daemon-reload`
 4. `systemd enable --now mailserver` <br/>
-    For monitoring: `systemd enable --now mailserver-monitoring`
+    For monitoring: `systemd enable --now mailserver-monitoring mailserver-monitoring-grafana mailserver-monitoring-prometheus mailserver-monitoring-pushgw mailserver-monitoring-network`
 
-If you use custom ports for HTTP and HTTPS don't forget to update mailserver.service and add the ports as positional arguments to `ExecStart=/opt/mailserver/start_mailserver.sh`.
+If you use custom ports for HTTP and HTTPS don't forget to update mailserver.service and add the ports as positional arguments to `ExecStart=/opt/mailserver/systemd/start_mailserver.sh`.
 
 **Manage users and aliases**
 

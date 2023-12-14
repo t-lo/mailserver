@@ -1,0 +1,14 @@
+[Unit]
+Description=Mailserver monitoring prometheus push gateway service
+Requires=mailserver-monitoring-network.service
+After=mailserver-monitoring-network.service
+PartOf=mailserver-monitoring.service
+
+[Service]
+Restart=always
+WorkingDirectory=/opt/mailserver
+ExecStart=/opt/mailserver/systemd/start_monitoring_pushgw.sh
+ExecStop=/usr/bin/docker stop mailserver-monitoring-pushgateway
+
+[Install]
+WantedBy=mailserver-monitoring.service

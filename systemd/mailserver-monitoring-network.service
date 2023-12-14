@@ -1,0 +1,23 @@
+[Unit]
+Description=Mailserver monitoring internal network
+PartOf=mailserver-monitoring.service
+
+[Service]
+Restart=always
+WorkingDirectory=/opt/mailserver
+# Create an "internal" network so monitoring services can only be connected
+#  to via the mailserver's caddy webserver.
+# NOTE that this also prevents monitoring from reaching the internet.
+#  This is intended.
+ExecStartPre=-/usr/bin/docker network rm mailserver-monitoring-internal
+ExecStart=/usr/bin/docker network create --internal mailserver-monitoring-internal
+ExecStartPost=/opt/mailserver/systemd/wait_for_network.sh "mailserver-monitoring-internal"
+ExecStartPost=/usr/bin/docker network connect mailserver-monitoring-internal mailserver
+
+ExecStop=/usr/bin/docker network disconnect mailserver-monitoring-internal mailserver
+ExecStopPost=/usr/bin/docker network rm mailserver-monitoring-internal
+
+RemainAfterExit=yes
+
+[Install]
+WantedBy=mailserver-monitoring.service

@@ -4,10 +4,18 @@ Description=Mailserver docker container
 [Service]
 Restart=always
 WorkingDirectory=/opt/mailserver
-# Add <http-port> <https-port> positional parameters if you use http proxy / custom HTTPS port
-ExecStart=/opt/mailserver/start_mailserver.sh
-ExecStop=docker stop -t 2 mailserver
+
+# Create mailserver named network for other container services to connect to.
+# This is mostly useful for other container services that use LMTP, e.g. mailman3.
+ExecStartPre=-/usr/bin/docker network rm mailserver-network
+ExecStartPre=/usr/bin/docker network create mailserver-network
+ExecStartPre=/opt/mailserver/systemd/wait_for_network.sh mailserver-network
+
+# use start_mailserver.sh <http-port> <https-port> for host http proxy / custom HTTPS port
+ExecStart=/opt/mailserver/systemd/start_mailserver.sh
+
+ExecStop=/usr/bin/docker stop mailserver
+ExecStopPost=-/usr/bin/docker network rm mailserver-network
 
 [Install]
-WantedBy=network.service
 WantedBy=multi-user.target
