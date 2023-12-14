@@ -29,11 +29,11 @@
 		not path /monitoring*
 	}
 
-        # Mild protection via Basic authentication. Make up a user name (or go with 'mailman')
+        # Mild protection via Basic authentication. Defaults to user "mailman", pass "supersecret".
         #  and generate a password hash via 
         # docker run --rm --entrypoint /usr/sbin/caddy ghcr.io/t-lo/mailserver hash-password --plaintext <PASSWORD>
         basicauth @auth {
-                mailman JDJhJDE0JEpCcllzOC9RNTNraURhQTlIV25DTC5LMko5VzJaWFZJV0xYNnJncklIUkhHRXhBNHpZZVRt
+                mailman $2a$14$qBxgji2SnzLz8TDnFlEGJOOYhFqVFbE1QQrIGYTXErQnt8g6H6OdS
         }
 
         handle /static/* {
