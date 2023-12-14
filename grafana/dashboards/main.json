@@ -705,14 +705,14 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "rate(dovecot_auth_success_count[30s])*30",
+          "expr": "rate(dovecot_auth_success_count[1m])*60",
           "instant": false,
           "legendFormat": "Avg. success per second",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Successful Authentications (1s rate, 30s avg)",
+      "title": "Successful Authentications (1s rate, 1m avg)",
       "transformations": [],
       "type": "timeseries"
     },
@@ -1086,14 +1086,14 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "rate(dovecot_auth_failures_count[30s])*30",
+          "expr": "rate(dovecot_auth_failures_count[1m])*60",
           "instant": false,
           "legendFormat": "Avg. fails per second",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Failed Authentications (1s rate, 30s avg)",
+      "title": "Failed Authentications (1s rate, 1m avg)",
       "transformations": [],
       "type": "timeseries"
     },
@@ -1611,7 +1611,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(dovecot_sieve_action_count[30s])*30",
+          "expr": "rate(dovecot_sieve_action_count[1m])*60",
           "legendFormat": "Sieve actions",
           "range": true,
           "refId": "A"
@@ -1622,7 +1622,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(dovecot_sieve_error_count[30s])*30",
+          "expr": "rate(dovecot_sieve_error_count[1m])*60",
           "hide": false,
           "legendFormat": "Sieve errors",
           "range": true,
@@ -1634,7 +1634,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(dovecot_sieve_action_duration_seconds_sum[30s])*30",
+          "expr": "rate(dovecot_sieve_action_duration_seconds_sum[1m])*60",
           "hide": false,
           "legendFormat": "Sieve action duration",
           "range": true,

@@ -297,14 +297,14 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "rate(dovecot_auth_success_total[30s])*30",
+          "expr": "rate(dovecot_auth_success_total[1m])*60",
           "instant": false,
           "legendFormat": "{{user}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Successful Authentications (1s rate, 30s avg)",
+      "title": "Successful Authentications (1s rate, 1m avg)",
       "transformations": [],
       "type": "timeseries"
     },
@@ -616,14 +616,14 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "rate(dovecot_auth_failures_total[30s])*30",
+          "expr": "rate(dovecot_auth_failures_total[1m])*60",
           "instant": false,
           "legendFormat": "{{user}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Failed Authentications (1s rate, 30s avg)",
+      "title": "Failed Authentications (1s rate, 1m avg)",
       "transformations": [],
       "type": "timeseries"
     },
