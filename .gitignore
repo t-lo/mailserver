@@ -4,3 +4,5 @@ mailman.yaml
 start_mailman.sh
 mailserver*.tgz
 VERSION
+PACKAGE_VERSIONS
+.*

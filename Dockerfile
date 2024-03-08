@@ -62,10 +62,4 @@ RUN addgroup -g 2001 mailuser \
 COPY scripts/ /
 RUN chmod 755 /*.sh
 
-# Hack alert: Alpine 3.17 still uses legacy IPTables (though it also ships nftables).
-# So we make the nftables multi-binary pretend it's the legacy one (so all the softlinks remain functional).
-# IPTables is used by Fail2Ban.
-RUN mv /sbin/xtables-legacy-multi /sbin/xtables-legacy-multi.orig \
-    && ln -s /sbin/xtables-nft-multi /sbin/xtables-legacy-multi
-
 entrypoint /entry.sh

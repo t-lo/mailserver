@@ -1,0 +1,9 @@
+alpine,source /etc/os-release; echo \$VERSION_ID
+postfix,apk version postfix | tail -n1 | sed 's/[[:space:]].*//'
+certbot,apk version certbot | tail -n1 | sed 's/[[:space:]].*//'
+opendkim,apk version opendkim | tail -n1 | sed 's/[[:space:]].*//'
+opendmarc,apk version opendmarc | tail -n1 | sed 's/[[:space:]].*//'
+caddy,apk version caddy | tail -n1 | sed 's/[[:space:]].*//'
+dovecot,apk version dovecot | tail -n1 | sed 's/[[:space:]].*//'
+fail2ban,apk version fail2ban | tail -n1 | sed 's/[[:space:]].*//'
+supervisor,apk version supervisor | tail -n1 | sed 's/[[:space:]].*//'
