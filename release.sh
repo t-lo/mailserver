@@ -47,7 +47,6 @@ if [ -n "${untracked}" ] ; then
 fi
 
 yell "Building the container image"
-docker pull alpine:latest
 docker build --pull -t "${container}:${version}" .
 docker tag "${container}:${version}" "${container}:latest"
 
