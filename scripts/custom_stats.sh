@@ -82,6 +82,21 @@ function emit_cpu_procs_stats() {
 }
 # --
 
+function emit_cert_end_dates() {
+    for cert in /etc/letsencrypt/live/*/cert.pem; do
+        local exp="$(openssl x509 -enddate -noout -in  "$cert" \
+                     | sed -e 's/.*=//' -e 's/ GMT//' )"
+        local exp_sec="$(date --date "${exp}" '+%s')"
+        local exp_sec_left="$(( ${exp_sec} - $(date '+%s')))"
+        local domain="$(basename "$(dirname "$cert")")"
+        echo "#TYPE ssl_certificate_expiration_date_seconds gauge"
+        echo "ssl_certificate_expiration_date_seconds{domain=\"${domain}\"} ${exp_sec}"
+        echo "#TYPE ssl_certificate_expiration_seconds_validity_left gauge"
+        echo "ssl_certificate_expiration_seconds_validity_left{domain=\"${domain}\"} ${exp_sec_left}"
+    done
+}
+#--
+
 echo "Starting custom stats exporter."
 
 mkdir -p "/host/var/run"
@@ -98,6 +113,7 @@ while true; do
     emit_postmaster_unread_emails | ${curl_pgw}
     emit_memory_usage | ${curl_pgw}
     emit_storage_usage | ${curl_pgw}
+    emit_cert_end_dates | ${curl_pgw}
 
     # DNS settings are less dynamic than the above stats, so we only
     # push if something changed.
