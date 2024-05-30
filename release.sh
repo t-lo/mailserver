@@ -51,20 +51,7 @@ docker build --pull -t "${container}:${version}" .
 docker tag "${container}:${version}" "${container}:latest"
 
 yell "Querying version information"
-{
-    while read -u 9 line; do
-        name="${line%,*}"
-        cmd="${line#*,}"
-        echo -n "* ${name}: "
-        docker run --entrypoint /bin/bash --rm -i "${container}:${version}" -l -c "${cmd}"
-    done 9<release_package_versions.list
-
-    echo -n "* Postfix prometheus exporter: "
-    sed -n 's/.*postfix_exporter_version=//p' Dockerfile
-
-    echo -n "* Fail2Ban prometheus exporter: "
-    sed -n 's/.*fail2ban_exporter_version=//p' Dockerfile
-} > PACKAGE_VERSIONS
+./package_versions.sh "${container}:${version}" release_package_versions.list | tee PACKAGE_VERSIONS
 
 yell "Creating the release tarball"
 echo "${version}" >VERSION
