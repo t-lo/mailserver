@@ -1,6 +1,7 @@
 [Unit]
 Description=Mailserver monitoring internal network
 PartOf=mailserver-monitoring.service
+After=mailserver-monitoring.service
 
 [Service]
 Restart=always
