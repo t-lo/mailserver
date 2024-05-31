@@ -24,10 +24,93 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 86400
+              },
+              {
+                "color": "#EAB839",
+                "value": 604800
+              },
+              {
+                "color": "green",
+                "value": 1200000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 46,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "titleSize": 18,
+          "valueSize": 22
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "ssl_certificate_expiration_seconds_validity_left",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "\"\"",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "TLS Cert Expires In",
+      "type": "stat"
+    },
     {
       "datasource": {
         "type": "prometheus",
@@ -63,8 +146,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 3,
-        "x": 0,
+        "w": 2,
+        "x": 3,
         "y": 0
       },
       "id": 39,
@@ -173,8 +256,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 3,
-        "x": 3,
+        "w": 2,
+        "x": 5,
         "y": 0
       },
       "id": 41,
@@ -279,8 +362,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 3,
-        "x": 6,
+        "w": 2,
+        "x": 7,
         "y": 0
       },
       "id": 43,
@@ -433,7 +516,9 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "postmaster_unread_emails",
+          "instant": false,
           "legendFormat": "Postmaster unread mails",
           "range": true,
           "refId": "A"
@@ -506,6 +591,87 @@
           "refId": "A"
         }
       ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 86400
+              },
+              {
+                "color": "#EAB839",
+                "value": 604800
+              },
+              {
+                "color": "green",
+                "value": 604801
+              }
+            ]
+          },
+          "unit": "dateTimeAsLocal"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 2
+      },
+      "id": 45,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "titleSize": 18,
+          "valueSize": 20
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "ssl_certificate_expiration_date_seconds * 1000",
+          "instant": false,
+          "legendFormat": " ",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "TLS Cert Expires On",
       "type": "stat"
     },
     {
@@ -840,112 +1006,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-red",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 86400
-              },
-              {
-                "color": "#EAB839",
-                "value": 604800
-              },
-              {
-                "color": "green",
-                "value": 604801
-              }
-            ]
-          },
-          "unit": "dateTimeAsLocal"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "s"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 9,
-        "x": 0,
-        "y": 5
-      },
-      "id": 45,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "text": {
-          "titleSize": 18,
-          "valueSize": 22
-        },
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "ssl_certificate_expiration_date_seconds * 1000",
-          "instant": false,
-          "legendFormat": "Mailserver Cert Expires On",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "ssl_certificate_expiration_seconds_validity_left",
-          "hide": false,
-          "instant": false,
-          "legendFormat": " Expires in",
-          "range": true,
-          "refId": "B"
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -1019,7 +1079,7 @@
         "h": 6,
         "w": 9,
         "x": 0,
-        "y": 7
+        "y": 5
       },
       "id": 44,
       "options": {
@@ -1444,6 +1504,217 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
+            "fillOpacity": 7,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 750000
+              },
+              {
+                "color": "red",
+                "value": 1500000
+              }
+            ]
+          },
+          "unit": "deckbytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/SWAP .*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*[Ff]ree/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Mem used"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 9,
+        "x": 0,
+        "y": 11
+      },
+      "id": 40,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "system_memory_used",
+          "instant": false,
+          "legendFormat": "Mem used",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "system_memory_buffers_cached",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Buffers + Cache",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "system_memory_shared",
+          "hide": false,
+          "legendFormat": "Shared",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "system_memory_free",
+          "hide": false,
+          "legendFormat": "Free",
+          "range": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "system_swap_used",
+          "hide": false,
+          "legendFormat": "SWAP used",
+          "range": true,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "system_swap_free",
+          "hide": false,
+          "legendFormat": "SWAP free",
+          "range": true,
+          "refId": "F"
+        }
+      ],
+      "title": "Memoy & Swap",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
@@ -1569,6 +1840,30 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 9,
+        "y": 15
+      },
+      "id": 35,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/f2bn/\">Fail2Ban</a></h3>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.0.0",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1582,7 +1877,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 7,
+            "fillOpacity": 13,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1609,7 +1904,7 @@
           "mappings": [],
           "min": 0,
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "green",
@@ -1617,11 +1912,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 750000
+                "value": 60
               },
               {
                 "color": "red",
-                "value": 1500000
+                "value": 85
               }
             ]
           },
@@ -1630,20 +1925,8 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byRegexp",
-              "options": "/SWAP .*/"
-            },
-            "properties": [
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/.*[Ff]ree/"
+              "id": "byName",
+              "options": "available"
             },
             "properties": [
               {
@@ -1658,7 +1941,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Mem used"
+              "options": "used"
             },
             "properties": [
               {
@@ -1676,9 +1959,9 @@
         "h": 5,
         "w": 9,
         "x": 0,
-        "y": 13
+        "y": 17
       },
-      "id": 40,
+      "id": 42,
       "options": {
         "legend": {
           "calcs": [
@@ -1702,10 +1985,8 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "system_memory_used",
-          "instant": false,
-          "legendFormat": "Mem used",
+          "expr": "system_storage_used",
+          "legendFormat": "used",
           "range": true,
           "refId": "A"
         },
@@ -1715,89 +1996,15 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "system_memory_buffers_cached",
+          "expr": "system_storage_available",
           "hide": false,
-          "instant": false,
-          "legendFormat": "Buffers + Cache",
+          "legendFormat": "available",
           "range": true,
           "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "system_memory_shared",
-          "hide": false,
-          "legendFormat": "Shared",
-          "range": true,
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "system_memory_free",
-          "hide": false,
-          "legendFormat": "Free",
-          "range": true,
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "system_swap_used",
-          "hide": false,
-          "legendFormat": "SWAP used",
-          "range": true,
-          "refId": "E"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "system_swap_free",
-          "hide": false,
-          "legendFormat": "SWAP free",
-          "range": true,
-          "refId": "F"
         }
       ],
-      "title": "Memoy & Swap",
+      "title": "Disk usage",
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 9,
-        "y": 15
-      },
-      "id": 35,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<br/>\n<h3 style=\"text-align:center\"> <a href=\"/monitoring/d/f2bn/\">Fail2Ban</a></h3>",
-        "mode": "html"
-      },
-      "pluginVersion": "11.0.0",
-      "type": "text"
     },
     {
       "datasource": {
@@ -1906,153 +2113,6 @@
         }
       ],
       "title": "Fail & Bans count",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 13,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 85
-              }
-            ]
-          },
-          "unit": "deckbytes"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "available"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "green",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "used"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 9,
-        "x": 0,
-        "y": 18
-      },
-      "id": 42,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true
-        },
-        "tooltip": {
-          "maxHeight": 600,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "9.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "system_storage_used",
-          "legendFormat": "used",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "system_storage_available",
-          "hide": false,
-          "legendFormat": "available",
-          "range": true,
-          "refId": "B"
-        }
-      ],
-      "title": "Disk usage",
       "type": "timeseries"
     },
     {
@@ -2476,7 +2536,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2576,7 +2637,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2677,7 +2739,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2786,7 +2849,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2890,7 +2954,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3006,6 +3071,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "main",
-  "version": 6,
+  "version": 19,
   "weekStart": ""
 }
