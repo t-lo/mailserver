@@ -21,7 +21,9 @@ function emit_mailbox_sizes() {
 # --
 
 function emit_postmaster_unread_emails() {
-    local unread="$(ls /host/mail/inboxes/${DOMAIN}/${ADMIN_USER}@${DOMAIN}/Maildir/new/ 2>/dev/null | wc -l)"
+    local unread="$(ls -1 /host/mail/inboxes/${DOMAIN}/${ADMIN_USER}@${DOMAIN}/Maildir/new/ \
+                          /host/mail/inboxes/${DOMAIN}/${ADMIN_USER}@${DOMAIN}/Maildir/cur/ \
+                          2>/dev/null | grep -E '.*[^S:]$' | wc -l)"
     echo "#TYPE postmaster_unread_emails gauge"
     echo "postmaster_unread_emails{user=\"${ADMIN_USER}@${DOMAIN}\"} ${unread}"
 }
