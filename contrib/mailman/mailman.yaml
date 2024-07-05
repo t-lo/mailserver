@@ -115,6 +115,8 @@ services:
           kill %1;
           wait;
       done"
+    networks:
+      mailserver-network:
 
 networks:
   mailserver-network:
