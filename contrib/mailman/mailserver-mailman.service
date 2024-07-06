@@ -1,5 +1,5 @@
 [Unit]
-Description=Mailserver docker container
+Description=Mailserver mailman docker-compose service
 Requires=mailserver.service
 After=mailserver.service
 

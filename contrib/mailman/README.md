@@ -41,4 +41,4 @@ To start at host system boot,
     1. Stop the docker-compose set-up if you've started it from the command line.
     1. Copy `mailserver-mailman.service` to `/etc/systemd/system/`.
     2. Run `systemctl daemon-reload`.
-    3. Run `systemctl activate --now mailserver-mailman.service`.
+    3. Run `systemctl enable --now mailserver-mailman.service`.

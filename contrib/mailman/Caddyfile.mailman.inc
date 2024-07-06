@@ -1,18 +1,22 @@
 #
 # Mailman HTTPS proxy include snippet
 #
-
+#
 # This include assumes that you are using Monitoring.
 # Monitoring activates Caddy as a HTTPS server which this include
 #  will use to serve the mailman web interface.
-
-# 1. Copy to _server_workspace/etc/caddy
+#
+# See https://docs.mailman3.org/en/latest/ for more information on mailman;
+#     https://asynchronous.in/docker-mailman/ for the docker set-up, and
+#     https://github.com/maxking/docker-mailman for the docker images github repo.
+#
+# 1. Copy to _server_workspace_/etc/caddy
 # 2. Generate a password hash for basic auth and replace <PASSWORD_HASH> below:
 #      docker run --rm --entrypoint /usr/sbin/caddy ghcr.io/t-lo/mailserver hash-password --plaintext <PASSWORD>
 #    Note down the password - this is for HTTP basic authentication with username "mailman".
-# 3. Edit /host/etc/caddy/Caddyfile.https.tmpl and add to the "imports" section:
-#     import /host/etc/caddy/Caddyfile.mailman.inc
-
+# 3. Edit _server_workspace_/etc/caddy/Caddyfile.https.tmpl and add to the "imports" section:
+#     import /etc/caddy/Caddyfile.mailman.inc
+# 4. Run "systemctl restart mailserver"
 
 # Include start
 
