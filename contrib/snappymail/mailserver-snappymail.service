@@ -1,0 +1,14 @@
+[Unit]
+Description=Mailserver snappymail webmail docker container
+Requires=mailserver.service
+After=mailserver.service
+
+[Service]
+Restart=always
+WorkingDirectory=/opt/mailserver
+ExecStart=/opt/mailserver/contrib/snappymail/start_snappymail.sh
+ExecStop=/usr/bin/docker stop mailserver-webmail
+
+[Install]
+WantedBy=network.service
+WantedBy=multi-user.target

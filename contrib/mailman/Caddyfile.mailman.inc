@@ -31,6 +31,7 @@
 	# exclude Grafana from mailman's basic auth since it ships its own auth
 	@auth {
 		not path /monitoring*
+		not path /webmail*
 	}
 
         # Mild protection via Basic authentication. Defaults to user "mailman", pass "supersecret".
