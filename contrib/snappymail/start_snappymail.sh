@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SNAPPY_VERSION=v2.36.4
+SNAPPY_VERSION=v2.38.2
 
 exec docker run --rm -i \
 	--env-file settings.env \
