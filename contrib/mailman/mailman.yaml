@@ -107,7 +107,6 @@ services:
     container_name: mailman-logwatcher
     hostname: mailman-logwatcher
     image: alpine
-    restart: always
     volumes:
     - ./_server_workspace_/mailman:/logs
     command: /bin/ash -c "
