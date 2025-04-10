@@ -85,7 +85,7 @@ function init_custom_metrics() {
 
         envsubst '$HOSTNAME' < /etc/caddy/Caddyfile.https.tmpl > /etc/caddy/Caddyfile.https
         caddy stop
-        caddy start --config /host/etc/caddy/Caddyfile.https
+        caddy start --adapter caddyfile --config /host/etc/caddy/Caddyfile.https
     else
         rm -f /host/etc/supervisor/conf.d.active/supervisor-monitoring.conf
     fi
@@ -139,8 +139,7 @@ init_fail2ban
 
 echo "##### ENTRY: starting caddy."
 init_srv_cfg caddy
-caddy start --config /host/etc/caddy/Caddyfile.http
-
+caddy start --adapter caddyfile --config /host/etc/caddy/Caddyfile.http
 
 echo "##### ENTRY: Processing letsencrypt."
 check_letsencrypt
