@@ -63,4 +63,4 @@ RUN addgroup -g 2001 mailuser \
 COPY scripts/ /
 RUN chmod 755 /*.sh
 
-entrypoint /entry.sh
+ENTRYPOINT [ "/entry.sh" ]
