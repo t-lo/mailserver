@@ -1,9 +1,9 @@
 # First, build the metrics exporter and the "prips" (print ip ranges) tool.
-ARG alpine_version=3.21.0
+ARG alpine_version=3.23.2
 FROM alpine:$alpine_version AS builder
 ARG postfix_exporter_version=0.3.0
-ARG fail2ban_exporter_version=0.10.2
-ARG prips_version=1.2.0
+ARG fail2ban_exporter_version=0.10.3
+ARG prips_version=1.2.2
 
 RUN apk update \
     && apk add go gcc make musl-dev
