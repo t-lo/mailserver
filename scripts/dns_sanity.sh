@@ -68,7 +68,7 @@ function check_dkim() {
     local domain="$1"
     local selector="$2"
 
-    opendkim-testkey -vvvv -d "${domain}" -s "${selector}" 2>&1 | grep -q 'key OK'
+    opendkim-testkey -x /host/etc/opendkim/opendkim.conf -vvvv -d "${domain}" -s "${selector}" 2>&1 | grep -q 'key OK'
 }
 # --
 
