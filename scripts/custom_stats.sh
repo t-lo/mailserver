@@ -99,6 +99,16 @@ function emit_cert_end_dates() {
 }
 #--
 
+function emit_mailserver_version() {
+    local v="unknown"
+    if [ -n "${MAILSERVER_VERSION:-}" ] ; then
+        v="${MAILSERVER_VERSION}"
+    fi
+    echo "#TYPE mailserver_version gauge"
+    echo "mailserver_version{version=\"${v}\"} 1"
+}
+#--
+
 echo "Starting custom stats exporter."
 
 mkdir -p "/host/var/run"
@@ -116,6 +126,7 @@ while true; do
     emit_memory_usage | ${curl_pgw}
     emit_storage_usage | ${curl_pgw}
     emit_cert_end_dates | ${curl_pgw}
+    emit_mailserver_version | ${curl_pgw}
 
     # DNS settings are less dynamic than the above stats, so we only
     # push if something changed.
