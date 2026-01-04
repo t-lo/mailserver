@@ -1,6 +1,6 @@
-# mailman integration - add this directly above
-# the "virtual_" maps
-transport_maps = regex:/host/mailman/core/var/data/postfix_lmtp
+# mailman integration - add this directly above the "virtual_" maps.
+# Comment out the earlier setting of "transport_maps=..." above to prevent postfix "override" warnings
+transport_maps = regex:/host/mailman/core/var/data/postfix_lmtp lmdb:/etc/postfix/transport
 relay_domains =  regex:/host/mailman/core/var/data/postfix_domains
 mynetworks_style = subnet
 

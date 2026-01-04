@@ -31,6 +31,18 @@ submission inet n       -       n       -       -       smtpd
   -o smtpd_reject_unlisted_recipient=no
   -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
   -o milter_macro_daemon_name=ORIGINATING
+# ------------------------------------------------------------------------
+# "trickle" transport for delaying multiple messages that go to the same domain.
+# We send 3 messages per minute to those domains.
+# Main purpose is to prevent denylisting by SPAM detectors.
+# See etc/postfix/transport for a list of domains that use trickle.
+trickle unix - - n - - smtp
+  -o syslog_name=postfix/trickle
+  -o trickle_destination_concurrency_limit=1
+  -o trickle_destination_rate_delay=1m
+  -o trickle_destination_recipient_limit=3
+  -o trickle_destination_concurrency_failed_cohort_limit=10
+  -o smtp_tls_security_level=encrypt
 # Choose one: enable submissions for loopback clients only, or for any client.
 #127.0.0.1:submissions inet n  -       n       -       -       smtpd
 #submissions     inet  n       -       n       -       -       smtpd

@@ -15,6 +15,11 @@ mydestination = $myhostname, localhost
 # support gmail-like user name suffixes, e.g. "kenny+spam@mydomain.net" maps to kenny@mydomain.net
 recipient_delimiter = +
 
+# Custom transport maps, including the "trickle" delayed bulk sending transport
+# When using the Mailman contrib, comment this out to prevent an
+# "overriding earlier entry" warnings at start-up. It is included in the mailman transport_maps.
+transport_maps = lmdb:/etc/postfix/transport
+
 # Virtual domains and stuff
 virtual_mailbox_base = /host/mail/inboxes
 virtual_mailbox_maps = lmdb:/etc/postfix/vuser
