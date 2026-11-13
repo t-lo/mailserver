@@ -1,12 +1,12 @@
 # First, build the metrics exporter and the "prips" (print ip ranges) tool.
-ARG alpine_version=3.23.2
+ARG alpine_version=3.24.4
 FROM alpine:$alpine_version AS builder
 ARG postfix_exporter_version=0.3.0
 ARG fail2ban_exporter_version=0.10.3
-ARG prips_version=1.2.2
+ARG prips_version=1.3.1
 
 RUN apk update \
-    && apk add go gcc make musl-dev
+    && apk add go gcc make musl-dev cargo
 
 RUN echo "Downloading and building Postfix exporter version '$postfix_exporter_version'" \
     && wget "https://github.com/kumina/postfix_exporter/archive/refs/tags/$postfix_exporter_version.tar.gz" \
@@ -32,10 +32,9 @@ RUN echo "Downloading and building prips version '$prips_version'" \
     && wget "https://devel.ringlet.net/files/sys/prips/prips-$prips_version.tar.gz" \
     && tar -xzvf "prips-$prips_version.tar.gz"
 
-RUN cd "/prips-$prips_version" \
-    && make \
-    && strip prips \
-    && mv prips /
+RUN cd "/prips-$prips_version/rust" \
+    && cargo build --release \
+    && mv target/release/prips /
 
 
 FROM alpine:$alpine_version
